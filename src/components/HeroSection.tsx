@@ -11,7 +11,7 @@ const NAV_LINKS = [
 const HeroSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [muted, setMuted] = useState(false);
+  const [muted, setMuted] = useState(true);
   const [showSoundHint, setShowSoundHint] = useState(true);
   const [useVideoFallback, setUseVideoFallback] = useState(false);
 
@@ -26,13 +26,10 @@ const HeroSection = () => {
     const v = videoRef.current;
     if (!v) return;
 
-    // Attempt unmuted play
-    v.muted = muted;
+    // Always start muted to guarantee autoplay works and does not hang the page
+    v.muted = true;
     v.play().catch((err) => {
-      console.warn("Unmuted autoplay blocked. Falling back to muted autoplay.", err);
-      v.muted = true;
-      setMuted(true);
-      v.play().catch((err2) => console.error("Muted play failed as well:", err2));
+      console.warn("Autoplay failed:", err);
     });
 
     return () => {
@@ -42,42 +39,38 @@ const HeroSection = () => {
     };
   }, [useVideoFallback]);
 
-  // Unmute on first user interaction to bypass browser autoplay rules
+  // Unmute as soon as the user interacts with the page (to satisfy browser autoplay rules)
   useEffect(() => {
-    const unmuteOnInteraction = (e: Event) => {
+    let unmuted = false;
+
+    const unmute = () => {
+      if (unmuted) return;
       const v = videoRef.current;
       if (!v) return;
-
-      // Avoid unmuting if the user is scrolling down
-      if (e.type === 'scroll' && window.scrollY > 20) {
-        return;
-      }
-
-      // Avoid unmuting if they clicked a navigation link that scrolls them away
-      if (e.type === 'click') {
-        const target = e.target as HTMLElement;
-        const isNavLink = target.closest('a')?.getAttribute('href')?.startsWith('#');
-        if (isNavLink) return;
-      }
 
       if (window.scrollY < 50) {
         v.muted = false;
         setMuted(false);
+        unmuted = true;
       }
-
-      window.removeEventListener('click', unmuteOnInteraction);
-      window.removeEventListener('scroll', unmuteOnInteraction);
-      window.removeEventListener('keydown', unmuteOnInteraction);
+      cleanup();
     };
 
-    window.addEventListener('click', unmuteOnInteraction);
-    window.addEventListener('scroll', unmuteOnInteraction);
-    window.addEventListener('keydown', unmuteOnInteraction);
-    return () => {
-      window.removeEventListener('click', unmuteOnInteraction);
-      window.removeEventListener('scroll', unmuteOnInteraction);
-      window.removeEventListener('keydown', unmuteOnInteraction);
+    const cleanup = () => {
+      window.removeEventListener('click', unmute);
+      window.removeEventListener('touchstart', unmute);
+      window.removeEventListener('mousemove', unmute);
+      window.removeEventListener('scroll', unmute);
+      window.removeEventListener('keydown', unmute);
     };
+
+    window.addEventListener('click', unmute);
+    window.addEventListener('touchstart', unmute);
+    window.addEventListener('mousemove', unmute);
+    window.addEventListener('scroll', unmute, { passive: true });
+    window.addEventListener('keydown', unmute);
+
+    return cleanup;
   }, []);
 
   // Auto-mute video when scrolling past hero towards About section
