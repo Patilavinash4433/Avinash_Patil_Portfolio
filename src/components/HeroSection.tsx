@@ -59,15 +59,11 @@ const HeroSection = () => {
     const cleanup = () => {
       window.removeEventListener('click', unmute);
       window.removeEventListener('touchstart', unmute);
-      window.removeEventListener('mousemove', unmute);
-      window.removeEventListener('scroll', unmute);
       window.removeEventListener('keydown', unmute);
     };
 
     window.addEventListener('click', unmute);
     window.addEventListener('touchstart', unmute);
-    window.addEventListener('mousemove', unmute);
-    window.addEventListener('scroll', unmute, { passive: true });
     window.addEventListener('keydown', unmute);
 
     return cleanup;
