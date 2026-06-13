@@ -14,6 +14,7 @@ const HeroSection = () => {
   const [muted, setMuted] = useState(true);
   const [showSoundHint, setShowSoundHint] = useState(true);
   const [useVideoFallback, setUseVideoFallback] = useState(false);
+  const userWantsSound = useRef(false);
 
   // Auto-hide "Tap for sound" hint after 5 seconds
   useEffect(() => {
@@ -48,10 +49,24 @@ const HeroSection = () => {
       const v = videoRef.current;
       if (!v) return;
 
-      if (window.scrollY < 50) {
+      userWantsSound.current = true; // User interacted, so they allow sound
+
+      const aboutSection = document.getElementById('about');
+      const isHeroVisible = aboutSection
+        ? aboutSection.getBoundingClientRect().top > 0
+        : window.scrollY <= 100;
+
+      if (isHeroVisible) {
         v.muted = false;
         setMuted(false);
         unmuted = true;
+        // Explicitly play to prevent Safari/iOS from pausing on unmute
+        const playPromise = v.play();
+        if (playPromise !== undefined) {
+          playPromise.catch((err) => {
+            console.warn("Play on interaction failed:", err);
+          });
+        }
       }
       cleanup();
     };
@@ -63,32 +78,34 @@ const HeroSection = () => {
     };
 
     window.addEventListener('click', unmute);
-    window.addEventListener('touchstart', unmute);
+    window.addEventListener('touchstart', unmute, { passive: true });
     window.addEventListener('keydown', unmute);
 
     return cleanup;
   }, []);
 
-  // Auto-mute video when scrolling past hero towards About section
+  // Auto-mute video when scrolling past hero, and resume if they scroll back up
   useEffect(() => {
     const handleScroll = () => {
       const v = videoRef.current;
       if (!v) return;
 
       const aboutSection = document.getElementById('about');
-      if (aboutSection) {
-        const rect = aboutSection.getBoundingClientRect();
-        // If About section starts entering viewport, mute the video
-        if (rect.top <= window.innerHeight) {
-          if (!v.muted) {
-            v.muted = true;
-            setMuted(true);
-          }
-        }
-      } else {
-        if (window.scrollY > 100 && !v.muted) {
+      const threshold = aboutSection ? aboutSection.getBoundingClientRect().top : 100;
+      const isHeroVisible = aboutSection ? threshold > 0 : window.scrollY <= 100;
+
+      if (!isHeroVisible) {
+        if (!v.muted) {
           v.muted = true;
           setMuted(true);
+        }
+      } else {
+        if (userWantsSound.current && v.muted) {
+          v.muted = false;
+          setMuted(false);
+          v.play().catch((err) => {
+            console.warn("Play on scroll-up failed:", err);
+          });
         }
       }
     };
@@ -100,12 +117,12 @@ const HeroSection = () => {
   useEffect(() => {
     let fired = false;
 
-      const goToAbout = () => {
-        if (fired) return;
-        fired = true;
-        const about = document.getElementById('about');
-        if (about) about.scrollIntoView({ behavior: 'auto', block: 'start' });
-      };
+    const goToAbout = () => {
+      if (fired) return;
+      fired = true;
+      const about = document.getElementById('about');
+      if (about) about.scrollIntoView({ behavior: 'auto', block: 'start' });
+    };
 
     const onWheel = (e: WheelEvent) => {
       if (fired) return;
@@ -135,9 +152,16 @@ const HeroSection = () => {
   const toggleMute = () => {
     const v = videoRef.current;
     if (!v) return;
-    v.muted = !v.muted;
-    setMuted(v.muted);
+    const nextMuted = !v.muted;
+    v.muted = nextMuted;
+    setMuted(nextMuted);
+    userWantsSound.current = !nextMuted;
     setShowSoundHint(false);
+
+    // Explicitly call play to prevent iOS from pausing on unmute
+    v.play().catch((err) => {
+      console.warn("Play on toggleMute failed:", err);
+    });
   };
 
   return (
