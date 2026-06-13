@@ -284,14 +284,24 @@ const HeroSection = () => {
 
           {/* Mute toggle + Sound hint */}
           <FadeIn delay={1.1} y={20}>
-            <div className="flex items-center gap-3">
-              {showSoundHint && muted && (
-                <span
-                  className="hidden sm:inline text-[10px] font-medium uppercase tracking-[0.25em] text-white/80"
-                  style={{ animation: 'pulseFade 2s ease-in-out infinite' }}
+            <div className="relative flex items-center">
+              {muted && (
+                <div
+                  className="absolute bottom-full left-1/2 mb-3 z-20 whitespace-nowrap rounded-lg border border-[#007AFF]/40 bg-black/85 px-3 py-1.5 text-[9px] font-black uppercase tracking-[0.25em] text-[#007AFF] shadow-[0_0_15px_rgba(0,122,255,0.35)] select-none"
+                  style={{
+                    animation: 'bounceTooltip 2s infinite',
+                    transform: 'translateX(-50%)'
+                  }}
                 >
-                  Tap for sound
-                </span>
+                  <span className="flex items-center gap-1.5">
+                    <span className="relative flex h-1.5 w-1.5">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#007AFF] opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#007AFF]"></span>
+                    </span>
+                    Sound On Karo 🔊
+                  </span>
+                  <div className="absolute left-1/2 -translate-x-1/2 top-full h-0 w-0 border-x-4 border-t-4 border-x-transparent border-t-[#007AFF]/40" />
+                </div>
               )}
               <button
                 onClick={toggleMute}
@@ -324,6 +334,10 @@ const HeroSection = () => {
         @keyframes pulseFade {
           0%, 100% { opacity: 0.5; }
           50% { opacity: 1; }
+        }
+        @keyframes bounceTooltip {
+          0%, 100% { transform: translate(-50%, 0); }
+          50% { transform: translate(-50%, -5px); }
         }
       `}</style>
     </section>
