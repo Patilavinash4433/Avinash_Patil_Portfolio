@@ -162,14 +162,14 @@ const HeroSection = () => {
           loop
           playsInline
           preload="auto"
-          className="absolute inset-0 h-full w-full object-cover"
+          className="absolute inset-0 h-full w-full object-cover object-top"
           onError={() => setUseVideoFallback(true)}
         >
           <source src="/intro.mp4" type="video/mp4" />
         </video>
       ) : (
         <div
-          className="absolute inset-0 h-full w-full bg-cover bg-center"
+          className="absolute inset-0 h-full w-full bg-cover bg-[center_top]"
           style={{ backgroundImage: "url('/avatar.webp?v=3')" }}
         />
       )}
@@ -211,10 +211,10 @@ const HeroSection = () => {
         </FadeIn>
 
         {/* Middle-left: PORTFOLIO + Name + Subtitle */}
-        <div className="flex flex-1 items-end md:items-center pb-8 md:pb-0">
+        <div className="flex flex-1 items-end md:items-center pb-12 md:pb-0">
           <div className="w-full max-w-7xl px-6 md:px-10">
             <FadeIn delay={0.3} y={20}>
-              <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[9px] sm:text-[10px] font-medium uppercase tracking-[0.25em] text-white/80 backdrop-blur-md mb-6 select-none">
+              <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[8px] sm:text-[10px] font-medium uppercase tracking-[0.25em] text-white/80 backdrop-blur-md mb-3 sm:mb-6 select-none">
                 <span className="h-1.5 w-1.5 rounded-full bg-[#007AFF] shadow-[0_0_6px_rgba(0,122,255,0.8)] animate-pulse" />
                 <span>Portfolio · 2026</span>
               </div>
@@ -224,7 +224,7 @@ const HeroSection = () => {
               <h1
                 className="font-black uppercase leading-[0.88] tracking-tight bg-gradient-to-br from-white/90 via-white/30 to-[#007AFF]/60 bg-clip-text text-transparent drop-shadow-[0_0_35px_rgba(0,122,255,0.45)] transition-transform duration-500 hover:scale-[1.01] cursor-default"
                 style={{
-                  fontSize: 'clamp(2rem, 8vw, 6.5rem)',
+                  fontSize: 'clamp(1.75rem, 7vw, 6.5rem)',
                   WebkitTextStroke: '1.2px rgba(255, 255, 255, 0.28)',
                   textShadow: '0 0 40px rgba(0, 122, 255, 0.15)',
                 }}
@@ -234,7 +234,7 @@ const HeroSection = () => {
             </FadeIn>
 
             <FadeIn delay={0.85} y={20}>
-              <div className="mt-6 sm:mt-8 flex flex-wrap items-center gap-3 sm:gap-4 select-none">
+              <div className="mt-4 sm:mt-8 flex flex-wrap items-center gap-3 sm:gap-4 select-none">
                 {[
                   { text: 'Data Analyst', glow: 'hover:border-blue-500/50 hover:shadow-[0_0_15px_rgba(59,130,246,0.3)] hover:text-blue-300' },
                   { text: 'BI Developer', glow: 'hover:border-cyan-500/50 hover:shadow-[0_0_15px_rgba(6,182,212,0.3)] hover:text-cyan-300' },
