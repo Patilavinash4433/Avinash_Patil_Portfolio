@@ -1,0 +1,176 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+#root {
+  background: #0c0c0c;
+  font-family: 'Kanit', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  min-height: 100vh;
+  color: #d7e2ea;
+  overflow-x: hidden;
+}
+
+.hero-heading {
+  background: linear-gradient(180deg, #646973 0%, #bbccd7 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* Subtle scrollbar that matches the dark theme */
+::-webkit-scrollbar {
+  width: 10px;
+  background: #0c0c0c;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1f1f24;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #2a2a30;
+}
+
+img {
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+/* Print Overrides for Resume Workspace */
+@media print {
+  /* Hide all UI elements marked with .no-print */
+  .no-print {
+    display: none !important;
+  }
+
+  /* Reset html, body, root, main and layout wrappers to enable correct page flow */
+  html, body, #root, main,
+  #resume-workspace-root,
+  #resume-workspace-frame,
+  #resume-preview-container {
+    display: block !important;
+    position: static !important;
+    overflow: visible !important;
+    overflow-x: visible !important;
+    overflow-y: visible !important;
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
+    width: auto !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+
+  /* Force browser to print background graphics */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+
+  /* Reset print area wrapper in print mode */
+  .print-area {
+    display: block !important;
+    width: 210mm !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+
+  /* Format each A4 page sheet in print mode */
+  .print-page {
+    display: block !important;
+    position: relative !important;
+    width: 210mm !important;
+    height: 297mm !important;
+    margin: 0 !important;
+    padding: 16mm 16mm 14mm 16mm !important;
+    box-sizing: border-box !important;
+    background: #ffffff !important;
+    color: #111827 !important;
+    page-break-after: always !important;
+    break-after: page !important;
+    box-shadow: none !important;
+    border: none !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    transform: none !important;
+  }
+
+  /* Avoid page breaks inside logical items */
+  .break-avoid {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+  
+  /* Prevent headings from being separated from their content */
+  h2 {
+    break-after: avoid !important;
+    page-break-after: avoid !important;
+  }
+
+  /* Force navy color and blue styles */
+  .bg-\[\#1B365D\] {
+    background-color: #1B365D !important;
+  }
+  .bg-\[\#F8FAFC\] {
+    background-color: #F8FAFC !important;
+  }
+  .text-white {
+    color: #ffffff !important;
+  }
+  .text-gray-200 {
+    color: #e5e7eb !important;
+  }
+  .text-\[\#60A5FA\] {
+    color: #60a5fa !important;
+  }
+  .text-\[\#1B365D\] {
+    color: #1B365D !important;
+  }
+  .border-\[\#1B365D\] {
+    border-color: #1B365D !important;
+  }
+  .border-\[\#E2E8F0\] {
+    border-color: #E2E8F0 !important;
+  }
+  
+  .bullet-point {
+    color: #374151 !important;
+  }
+
+  a {
+    text-decoration: none !important;
+    color: inherit !important;
+  }
+}
+@page {
+  size: A4 portrait;
+  margin: 0 !important;
+}
