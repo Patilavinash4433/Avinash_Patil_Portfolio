@@ -211,7 +211,7 @@ const HeroSection = () => {
         </FadeIn>
 
         {/* Middle-left: PORTFOLIO + Name + Subtitle */}
-        <div className="flex flex-1 items-center">
+        <div className="flex flex-1 items-end md:items-center pb-8 md:pb-0">
           <div className="w-full max-w-7xl px-6 md:px-10">
             <FadeIn delay={0.3} y={20}>
               <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[9px] sm:text-[10px] font-medium uppercase tracking-[0.25em] text-white/80 backdrop-blur-md mb-6 select-none">
@@ -224,7 +224,7 @@ const HeroSection = () => {
               <h1
                 className="font-black uppercase leading-[0.88] tracking-tight bg-gradient-to-br from-white/90 via-white/30 to-[#007AFF]/60 bg-clip-text text-transparent drop-shadow-[0_0_35px_rgba(0,122,255,0.45)] transition-transform duration-500 hover:scale-[1.01] cursor-default"
                 style={{
-                  fontSize: 'clamp(2.5rem, 8vw, 6.5rem)',
+                  fontSize: 'clamp(2rem, 8vw, 6.5rem)',
                   WebkitTextStroke: '1.2px rgba(255, 255, 255, 0.28)',
                   textShadow: '0 0 40px rgba(0, 122, 255, 0.15)',
                 }}
