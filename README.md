@@ -1,80 +1,87 @@
-# Harsh Goyal — Developer & Designer Portfolio
+<p align="center">
+    <img width="150" height="150" alt="a1612acc-6c52-4cbd-b56d-6948bf65b2a9" src="https://github.com/user-attachments/assets/b81652d6-3503-421a-a4ad-21137e810594" />
+</p>
 
-A dark-themed personal portfolio for **Harsh Goyal** — Computer Science graduate from NSUT, currently a Content R&D Trainee at PhysicsWallah. Focused on UI/UX, front-end development, and GenAI integration.
+<h1 align="center">Avinash Patil</h1>
 
-Built with **React + TypeScript + Vite + Tailwind CSS + Framer Motion**. Designed for one-click deployment on **Vercel**.
+<p align="center">
+  Data Analytics Portfolio
+</p>
+
+<p align="center">
+  SQL • Power BI • Python • Business Intelligence
+</p>
+A premium cinematic portfolio for **Avinash Patil** — Information Technology student at GTU and Data Analytics Intern at QuadSync Tech Solutions.
+
+Focused on **Data Analytics, Business Intelligence, Dashboard Development, SQL, Power BI, Python, and Web Development**.
+
+Built with **React + TypeScript + Vite + Tailwind CSS + Framer Motion** and designed for seamless deployment on **Vercel**.
 
 ## Stack
 
-- React 18 / TypeScript
-- Vite (build tool)
-- Tailwind CSS (utility-first styling)
-- Framer Motion (animations + scroll effects)
-- Lucide React (icons)
-- Kanit font (Google Fonts, weights 300–900)
+* React 18 / TypeScript
+* Vite
+* Tailwind CSS
+* Framer Motion
+* Lucide React
+* Custom Glassmorphism UI
+* Responsive Design
 
 ## Sections
 
-1. **Hero** — name, tagline, magnetic-hover portrait
-2. **About** — bio + skills grouped by Languages / Frameworks / Tools / AI
-3. **Services** — UI/UX Design, Web Design, Front-end Development, GenAI Integration
-4. **Projects** — sticky-stacking cards for AI Tutor, PiLearn, ResumeIQ, Notch
-5. **Contact** — Email, WhatsApp, LinkedIn, GitHub
+1. **Hero** — Cinematic introduction, avatar, and recruiter-focused CTA
+2. **About** — Professional journey, internship, and technical expertise
+3. **Core Expertise** — Data Analytics, BI, SQL, Dashboarding, Automation
+4. **Projects** — Interactive showcase of analytics and development projects
+5. **Certifications** — Professional certifications and simulations
+6. **Recruiter Hub** — Quick Hire section with WhatsApp and Email actions
+7. **AI Assistant** — Rule-based portfolio chatbot
+8. **Contact** — Email, LinkedIn, GitHub, and Resume
 
-## Run locally
+## Run Locally
 
 ```bash
 npm install
-npm run dev      # http://localhost:5173
-npm run build    # production build → /dist
-npm run preview  # serve /dist locally
+npm run dev
+npm run build
+npm run preview
 ```
 
 ## Deploy to Vercel
 
-Push to GitHub → import the repo at [vercel.com/new](https://vercel.com/new) → click Deploy. No environment variables needed.
 
-## Project structure
+## Project Structure
 
-```
+```text
 src/
-├── App.tsx                    # composes all sections
-├── main.tsx                   # React entry
-├── index.css                  # global styles + .hero-heading gradient
+├── App.tsx
+├── main.tsx
+├── index.css
 └── components/
-    ├── HeroSection.tsx        # navbar, massive heading, magnetic portrait
-    ├── AboutSection.tsx       # bio, animated text, skills grid
-    ├── ServicesSection.tsx    # white section, 4 numbered services
-    ├── ProjectsSection.tsx    # sticky-stacking project cards
-    ├── ContactSection.tsx     # 4 contact methods with icons
-    │
-    ├── ContactButton.tsx      # gradient pill CTA
-    ├── LiveProjectButton.tsx  # ghost outline pill
-    ├── FadeIn.tsx             # whileInView animation wrapper
-    ├── Magnet.tsx             # mouse-following magnetic hover
-    └── AnimatedText.tsx       # char-by-char scroll-driven reveal
+    ├── HeroSection.tsx
+    ├── AboutSection.tsx
+    ├── ServicesSection.tsx
+    ├── ProjectsSection.tsx
+    ├── CertificationsSection.tsx
+    ├── RecruiterHub.tsx
+    ├── Chatbot.tsx
+    ├── ContactSection.tsx
+    ├── FadeIn.tsx
+    ├── AnimatedText.tsx
+    └── DashboardCards.tsx
 ```
 
-## Featured projects
 
-| Project | Live | Built with |
-|---|---|---|
-| ResumeIQ | [resumeiq-harsh.vercel.app](https://resumeiq-harsh.vercel.app) | React, Gemini API, Vercel |
-| Notch | [notch-zeta.vercel.app](https://notch-zeta.vercel.app) | React, Tailwind, Framer Motion |
+## Contact
 
-## Customisation
+📧 Email: [patiluday8035@gmail.com](mailto:patiluday8035@gmail.com)
 
-| Want to change | Open this file |
-|---|---|
-| Name, nav links, hero text | `src/components/HeroSection.tsx` |
-| About paragraph, skills list | `src/components/AboutSection.tsx` |
-| Services list | `src/components/ServicesSection.tsx` (`SERVICES` array) |
-| Projects, screenshots, live URLs | `src/components/ProjectsSection.tsx` (`PROJECTS` array) |
-| Contact methods | `src/components/ContactSection.tsx` (`CONTACT_METHODS` array) |
-| Project screenshots | drop new images in `public/` and reference as `/filename.png` |
-| Brand gradient, font, dark colour | `src/index.css` and `tailwind.config.js` |
-| Page title, meta description | `index.html` |
+💼 LinkedIn:
+https://www.linkedin.com/in/patilavinash4046/
 
-## Credits
+💻 GitHub:
+https://github.com/Patilavinash4433
 
-Designed & built by **Harsh Goyal** · [LinkedIn](https://www.linkedin.com/in/harsh-goyal-7900b2256/) · [GitHub](https://github.com/harshgoyal27)
+---
+
+Transforming Data Into Decisions.
