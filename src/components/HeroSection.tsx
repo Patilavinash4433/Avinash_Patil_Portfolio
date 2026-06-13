@@ -84,7 +84,7 @@ const HeroSection = () => {
     return cleanup;
   }, []);
 
-  // Auto-mute video when scrolling past hero, and resume if they scroll back up
+  // Auto-mute video when scrolling past hero, and resume play if hero is visible and video was paused/muted
   useEffect(() => {
     const handleScroll = () => {
       const v = videoRef.current;
@@ -100,9 +100,13 @@ const HeroSection = () => {
           setMuted(true);
         }
       } else {
+        // Scroll up: if muted and user wants sound, unmute it
         if (userWantsSound.current && v.muted) {
           v.muted = false;
           setMuted(false);
+        }
+        // Ensure the video is playing if it is visible
+        if (v.paused) {
           v.play().catch((err) => {
             console.warn("Play on scroll-up failed:", err);
           });
@@ -111,6 +115,29 @@ const HeroSection = () => {
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Resume play when tab becomes visible again and user is at the top (hero visible)
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      const v = videoRef.current;
+      if (!v) return;
+
+      if (document.visibilityState === 'visible') {
+        const aboutSection = document.getElementById('about');
+        const threshold = aboutSection ? aboutSection.getBoundingClientRect().top : 100;
+        const isHeroVisible = aboutSection ? threshold > 0 : window.scrollY <= 100;
+
+        if (isHeroVisible && v.paused) {
+          v.play().catch((err) => {
+            console.warn("Resume on visibility change failed:", err);
+          });
+        }
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
   }, []);
 
   // Snap-scroll: one wheel tick / keypress while at top → jump to About
@@ -251,7 +278,7 @@ const HeroSection = () => {
                 {[
                   { text: 'Data Analyst', glow: 'hover:border-blue-500/50 hover:shadow-[0_0_15px_rgba(59,130,246,0.3)] hover:text-blue-300' },
                   { text: 'BI Developer', glow: 'hover:border-cyan-500/50 hover:shadow-[0_0_15px_rgba(6,182,212,0.3)] hover:text-cyan-300' },
-                  { text: 'Data Visualization', glow: 'hover:border-emerald-500/50 hover:shadow-[0_0_15px_rgba(16,185,129,0.3)] hover:text-emerald-300' }
+                  { text: 'Data Visualization', glow: 'hover:border-emerald-500/50 hover:shadow-[0_0_15px_rgba(10,185,129,0.3)] hover:text-emerald-300' }
                 ].map((role, idx) => (
                   <div key={idx} className="flex items-center gap-3">
                     {idx > 0 && <span className="text-white/20 font-light text-sm hidden sm:inline">·</span>}
@@ -287,7 +314,7 @@ const HeroSection = () => {
             <div className="relative flex items-center">
               {muted && (
                 <div
-                  className="absolute bottom-full left-1/2 mb-3 z-20 whitespace-nowrap rounded-lg border border-[#007AFF]/40 bg-black/85 px-3 py-1.5 text-[9px] font-black uppercase tracking-[0.25em] text-[#007AFF] shadow-[0_0_15px_rgba(0,122,255,0.35)] select-none"
+                  className="absolute bottom-full left-1/2 mb-3 z-20 whitespace-nowrap rounded-lg border border-white/20 bg-black/85 px-2.5 py-1.5 text-[8px] font-bold uppercase tracking-[0.25em] text-white/90 shadow-[0_0_15px_rgba(255,255,255,0.1)] select-none"
                   style={{
                     animation: 'bounceTooltip 2s infinite',
                     transform: 'translateX(-50%)'
@@ -295,12 +322,12 @@ const HeroSection = () => {
                 >
                   <span className="flex items-center gap-1.5">
                     <span className="relative flex h-1.5 w-1.5">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#007AFF] opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#007AFF]"></span>
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-white"></span>
                     </span>
-                    Sound On Karo 🔊
+                    Sound On
                   </span>
-                  <div className="absolute left-1/2 -translate-x-1/2 top-full h-0 w-0 border-x-4 border-t-4 border-x-transparent border-t-[#007AFF]/40" />
+                  <div className="absolute left-1/2 -translate-x-1/2 top-full h-0 w-0 border-x-4 border-t-4 border-x-transparent border-t-black/85" />
                 </div>
               )}
               <button
