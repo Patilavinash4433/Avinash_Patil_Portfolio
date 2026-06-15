@@ -202,6 +202,7 @@ const HeroSection = () => {
           loop
           playsInline
           preload="auto"
+          poster="/avatar.webp?v=3"
           className="absolute inset-0 h-full w-full object-cover object-top"
           onError={() => setUseVideoFallback(true)}
         >
