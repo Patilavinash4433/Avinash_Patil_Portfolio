@@ -59,16 +59,29 @@ const PROJECTS: ProjectData[] = [
   },
   {
     number: '04',
-    category: 'Excel · Pivot Tables · KPIs',
-    tags: ['Excel', 'Pivot Tables', 'KPI Reporting'],
-    name: 'Global Sales Dashboard',
+    category: 'Python · Matplotlib · Seaborn',
+    tags: ['Matplotlib', 'Seaborn', 'HTML', 'CSS', 'JS'],
+    name: 'TechNova_Revenue_Dashboard',
     liveUrl: 'https://patilavinash4433.github.io/TechNova_Revenue_Dashboard/',
-    col1Image1: '/global-sales-3.webp',
-    col1Image2: '/global-sales-2.webp',
-    col2Image: '/global-sales-1.webp',
+    col1Image1: '/technova-1.webp',
+    col1Image2: '/technova-2.webp',
+    col2Image: '/technova-3.webp',
     glowColor: 'from-amber-600/15 via-yellow-500/5 to-transparent',
     borderColor: 'hover:border-amber-500/40',
     accentColor: 'text-amber-400',
+  },
+  {
+    number: '05',
+    category: 'Excel · Pivot Tables · KPIs',
+    tags: ['Excel', 'Pivot Tables', 'KPI Reporting'],
+    name: 'Global Sales Dashboard',
+    liveUrl: 'https://github.com/Patilavinash4433/Sales_Analytics_Dashboard_Excel',
+    col1Image1: '/excel-sales-1.webp',
+    col1Image2: '/excel-sales-2.webp',
+    col2Image: '/excel-sales-3.webp',
+    glowColor: 'from-violet-600/15 via-fuchsia-500/5 to-transparent',
+    borderColor: 'hover:border-violet-500/40',
+    accentColor: 'text-violet-400',
   },
 ];
 
@@ -147,7 +160,8 @@ const ProjectCard = ({ project, index, total, containerRef, onImageClick }: Proj
                 project.number === '01' ? 'hover:bg-blue-600 hover:shadow-[0_0_20px_rgba(59,130,246,0.4)]' :
                 project.number === '02' ? 'hover:bg-red-600 hover:shadow-[0_0_20px_rgba(239,68,68,0.4)]' :
                 project.number === '03' ? 'hover:bg-emerald-600 hover:shadow-[0_0_20px_rgba(16,185,129,0.4)]' :
-                'hover:bg-amber-600 hover:shadow-[0_0_20px_rgba(245,158,11,0.4)]'
+                project.number === '04' ? 'hover:bg-amber-600 hover:shadow-[0_0_20px_rgba(245,158,11,0.4)]' :
+                'hover:bg-violet-600 hover:shadow-[0_0_20px_rgba(139,92,246,0.4)]'
               } transition-all duration-300 hover:scale-105`}
             />
           </div>
