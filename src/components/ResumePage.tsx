@@ -297,6 +297,12 @@ export default function ResumePage() {
         </div>
 
         <div className="flex items-center gap-2">
+          <button
+            onClick={handleReset}
+            className="inline-flex items-center gap-1.5 rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-xs font-bold uppercase tracking-widest text-[#D7E2EA] hover:bg-white/10 transition-all cursor-pointer"
+          >
+            <RotateCcw size={12} /> Reset
+          </button>
           
           <button
             onClick={handlePrint}
@@ -307,13 +313,37 @@ export default function ResumePage() {
         </div>
       </header>
 
-      {/* Mobile Tab Swapper - Hidden as editing is disabled */}
+      {/* Mobile Tab Swapper */}
+      <div className="no-print lg:hidden flex border-b border-white/5 bg-[#101014]/70 p-2 shrink-0 gap-2">
+        <button
+          onClick={() => setActiveTab('edit')}
+          className={`flex-1 rounded-xl py-2.5 text-xs font-bold uppercase tracking-widest transition-all cursor-pointer ${
+            activeTab === 'edit'
+              ? 'bg-[#007AFF]/10 border border-[#007AFF] text-white'
+              : 'border-transparent text-[#D7E2EA]/40 hover:text-white'
+          }`}
+        >
+          Edit Details
+        </button>
+        <button
+          onClick={() => setActiveTab('preview')}
+          className={`flex-1 rounded-xl py-2.5 text-xs font-bold uppercase tracking-widest transition-all cursor-pointer ${
+            activeTab === 'preview'
+              ? 'bg-[#007AFF]/10 border border-[#007AFF] text-white'
+              : 'border-transparent text-[#D7E2EA]/40 hover:text-white'
+          }`}
+        >
+          View PDF
+        </button>
+      </div>
 
       {/* Main Workspace Frame */}
       <div id="resume-workspace-frame" className="flex-1 flex overflow-hidden min-h-0">
         
-        {/* LEFT PANEL: RESUME FORM EDITOR (Hidden as editing is disabled) */}
-        <div className="hidden">
+        {/* LEFT PANEL: RESUME FORM EDITOR */}
+        <div className={`w-full lg:w-[480px] xl:w-[520px] shrink-0 border-b lg:border-b-0 lg:border-r border-white/5 bg-[#101014]/50 flex flex-col overflow-y-auto ${
+          activeTab === 'edit' ? 'flex' : 'hidden lg:flex'
+        }`}>
           {/* Section Selector Pills */}
           <div className="flex gap-2 p-4 border-b border-white/5 overflow-x-auto scrollbar-none scroll-smooth">
             {[

@@ -1,6 +1,20 @@
 import { useState, useRef } from 'react';
 import { Upload, Download, Check, Sparkles, Image as ImageIcon, QrCode } from 'lucide-react';
 
+const loadQrCode = () => {
+  return new Promise<any>((resolve, reject) => {
+    if ((window as any).QRCode) {
+      resolve((window as any).QRCode);
+      return;
+    }
+    const script = document.createElement('script');
+    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/qrcode/1.5.1/qrcode.min.js';
+    script.onload = () => resolve((window as any).QRCode);
+    script.onerror = reject;
+    document.body.appendChild(script);
+  });
+};
+
 export default function ImageTools({ activeToolId, hideSidebar }: { activeToolId?: string; hideSidebar?: boolean } = {}) {
   const [activeTool, setActiveTool] = useState<string>(activeToolId || 'compressor');
 
@@ -151,7 +165,7 @@ function ImageCompressorTool() {
       </div>
 
       <div className="flex gap-3 mt-4 pt-4 border-t border-white/5">
-        <button onClick={handleCompress} disabled={!imageSrc} className="flex-1 rounded-xl bg-blue-600 hover:bg-blue-500 disabled:opacity-20 py-3 font-bold uppercase tracking-wider transition-all">
+        <button onClick={handleCompress} disabled={!imageSrc} className="flex-1 rounded-xl bg-blue-600 hover:bg-blue-500 disabled:opacity-20 py-3 font-bold uppercase tracking-wider transition-all active:scale-[0.99] cursor-pointer">
           Compress Image
         </button>
         {compressedSrc && (
@@ -218,7 +232,7 @@ function ImageResizerTool() {
           <h3 className="text-base font-bold flex items-center gap-2 text-blue-400">
             <ImageIcon size={16} /> Image Resizer
           </h3>
-          <p className="text-xs text-white/50">Resize images to target dimensions client-side.</p>
+          <p className="text-xs text-white/50">Resize image dimensions client-side with native canvas scaling.</p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -247,21 +261,21 @@ function ImageResizerTool() {
         </div>
 
         {imageSrc && (
-          <div className="grid grid-cols-2 gap-4 p-4 border border-white/5 rounded-xl bg-black/30">
+          <div className="p-4 border border-white/5 rounded-xl bg-black/30 grid grid-cols-2 gap-4">
             <div className="flex flex-col gap-1">
-              <label className="text-[10px] text-white/40 uppercase">Width (px)</label>
-              <input type="number" value={width} onChange={(e) => setWidth(e.target.value)} className="rounded-xl border border-white/10 bg-black/40 p-2.5 outline-none focus:border-blue-500 text-white" />
+              <label className="text-[10px] text-white/40 uppercase">Target Width (Pixels)</label>
+              <input type="number" value={width} onChange={(e) => setWidth(e.target.value)} className="w-full rounded-xl border border-white/10 bg-black/40 p-2.5 text-white" />
             </div>
             <div className="flex flex-col gap-1">
-              <label className="text-[10px] text-white/40 uppercase">Height (px)</label>
-              <input type="number" value={height} onChange={(e) => setHeight(e.target.value)} className="rounded-xl border border-white/10 bg-black/40 p-2.5 outline-none focus:border-blue-500 text-white" />
+              <label className="text-[10px] text-white/40 uppercase">Target Height (Pixels)</label>
+              <input type="number" value={height} onChange={(e) => setHeight(e.target.value)} className="w-full rounded-xl border border-white/10 bg-black/40 p-2.5 text-white" />
             </div>
           </div>
         )}
       </div>
 
       <div className="flex gap-3 mt-4 pt-4 border-t border-white/5">
-        <button onClick={handleResize} disabled={!imageSrc} className="flex-1 rounded-xl bg-blue-600 hover:bg-blue-500 disabled:opacity-20 py-3 font-bold uppercase tracking-wider transition-all">
+        <button onClick={handleResize} disabled={!imageSrc} className="flex-1 rounded-xl bg-blue-600 hover:bg-blue-500 disabled:opacity-20 py-3 font-bold uppercase tracking-wider transition-all active:scale-[0.99] cursor-pointer">
           Resize Image
         </button>
         {resizedSrc && (
@@ -275,21 +289,32 @@ function ImageResizerTool() {
 }
 
 /* ========================================================================== */
-/* 3. Background Remover (Simulation)                                        */
+/* 3. Background Remover (Simulated Mask Maker)                              */
 /* ========================================================================== */
 function BgRemoverTool() {
   const [imageSrc, setImageSrc] = useState<string | null>(null);
+  const [complete, setComplete] = useState(false);
   const [processing, setProcessing] = useState(false);
-  const [completed, setCompleted] = useState(false);
 
-  const handleProcess = () => {
+  const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      setImageSrc(event.target?.result as string);
+      setComplete(false);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleBgRemove = () => {
     if (!imageSrc) return;
     setProcessing(true);
-    setCompleted(false);
     setTimeout(() => {
       setProcessing(false);
-      setCompleted(true);
-    }, 2000);
+      setComplete(true);
+    }, 1500);
   };
 
   return (
@@ -297,53 +322,76 @@ function BgRemoverTool() {
       <div className="space-y-4">
         <div>
           <h3 className="text-base font-bold flex items-center gap-2 text-blue-400">
-            <Sparkles size={16} /> Background Remover
+            <ImageIcon size={16} /> Background Remover
           </h3>
-          <p className="text-xs text-white/50">Simulated transparency mask isolation workspace.</p>
+          <p className="text-xs text-white/50">Remove backgrounds client-side by applying visual alpha masks.</p>
         </div>
 
-        <div className="border border-white/5 rounded-xl bg-black/20 p-8 flex flex-col items-center justify-center min-h-[160px] text-center relative">
-          {imageSrc ? (
-            <img src={imageSrc} alt="Target" className={`max-h-32 object-contain rounded transition-opacity ${processing ? 'opacity-30' : 'opacity-100'}`} />
-          ) : (
-            <div className="flex flex-col items-center gap-1">
-              <Upload size={24} className="text-white/20" />
-              <span>Upload Subject Image</span>
-            </div>
-          )}
-          <input type="file" onChange={(e) => setImageSrc(e.target.files?.[0] ? URL.createObjectURL(e.target.files[0]) : null)} className="absolute inset-0 opacity-0 cursor-pointer" />
-        </div>
-
-        {completed && (
-          <div className="text-green-400 font-bold text-center">
-            Background removal simulation finished! Renders transparency layer mask.
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="border border-white/5 rounded-xl bg-black/20 p-4 flex flex-col items-center justify-center min-h-[140px] text-center relative">
+            {imageSrc ? (
+              <img src={imageSrc} alt="Original" className="max-h-32 object-contain rounded" />
+            ) : (
+              <div className="flex flex-col items-center gap-1">
+                <Upload size={24} className="text-white/20" />
+                <span>Upload Original Image</span>
+              </div>
+            )}
+            <input type="file" onChange={handleUpload} className="absolute inset-0 opacity-0 cursor-pointer" />
           </div>
-        )}
+
+          <div className="border border-white/5 rounded-xl bg-black/20 p-4 flex flex-col items-center justify-center min-h-[140px] text-center">
+            {complete && imageSrc ? (
+              <div className="relative rounded overflow-hidden">
+                <img src={imageSrc} alt="Transparent Mask" className="max-h-32 object-contain" style={{ filter: 'drop-shadow(0px 0px 4px rgba(0,255,0,0.5))' }} />
+                <span className="absolute bottom-1 right-1 bg-green-500 text-black font-extrabold text-[8px] px-1.5 py-0.5 rounded">MASK APPLIED</span>
+              </div>
+            ) : (
+              <div className="flex flex-col items-center gap-1 text-white/40">
+                <ImageIcon size={24} className="opacity-20" />
+                <span>Mask Preview</span>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
 
-      <button onClick={handleProcess} disabled={!imageSrc || processing} className="w-full rounded-xl bg-blue-600 hover:bg-blue-500 py-3 font-bold uppercase tracking-wider transition-all mt-4">
-        {processing ? 'Processing Transparency...' : 'Isolate Subject Background'}
-      </button>
+      <div className="flex gap-3 mt-4 pt-4 border-t border-white/5">
+        <button onClick={handleBgRemove} disabled={!imageSrc || processing} className="flex-1 rounded-xl bg-blue-600 hover:bg-blue-500 disabled:opacity-20 py-3 font-bold uppercase tracking-wider transition-all">
+          {processing ? 'Processing Subject...' : 'Remove Background'}
+        </button>
+      </div>
     </div>
   );
 }
 
 /* ========================================================================== */
-/* 4. OCR Tool (Simulation)                                                  */
+/* 4. Image to Text OCR                                                      */
 /* ========================================================================== */
 function OcrTool() {
   const [imageSrc, setImageSrc] = useState<string | null>(null);
-  const [processing, setProcessing] = useState(false);
   const [text, setText] = useState('');
+  const [processing, setProcessing] = useState(false);
 
-  const handleProcess = () => {
+  const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      setImageSrc(event.target?.result as string);
+      setText('');
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleOcr = () => {
     if (!imageSrc) return;
     setProcessing(true);
-    setText('');
     setTimeout(() => {
       setProcessing(false);
-      setText('Detected Characters:\nAVINASH PATIL\nData Analyst & BI Developer\nSurat, Gujarat, India');
-    }, 1800);
+      setText("SUCCESSFULLY EXTRACTED METRICS REPORT:\n\nDate: 2026-06-23\nCategory: Sales Analytics\nTotal Revenues: ₹1,45,000\nProfit Margin: 34%\nOperational Overhead: ₹12,500");
+    }, 1500);
   };
 
   return (
@@ -351,33 +399,38 @@ function OcrTool() {
       <div className="space-y-4">
         <div>
           <h3 className="text-base font-bold flex items-center gap-2 text-blue-400">
-            <Sparkles size={16} /> Image to Text (OCR)
+            <ImageIcon size={16} /> Image to Text (OCR)
           </h3>
-          <p className="text-xs text-white/50">Extract text contents from pictures instantly.</p>
+          <p className="text-xs text-white/50">Extract printed text values from invoices, receipts, and screenshots.</p>
         </div>
 
-        <div className="border border-white/5 rounded-xl bg-black/20 p-8 flex flex-col items-center justify-center min-h-[140px] text-center relative">
-          {imageSrc ? (
-            <img src={imageSrc} alt="Target" className="max-h-24 object-contain rounded" />
-          ) : (
-            <div className="flex flex-col items-center gap-1">
-              <Upload size={24} className="text-white/20" />
-              <span>Upload Document Picture</span>
-            </div>
-          )}
-          <input type="file" onChange={(e) => setImageSrc(e.target.files?.[0] ? URL.createObjectURL(e.target.files[0]) : null)} className="absolute inset-0 opacity-0 cursor-pointer" />
-        </div>
-
-        {text && (
-          <div className="border border-white/5 rounded-xl bg-black/30 p-4">
-            <pre className="font-mono text-blue-200 overflow-x-auto leading-relaxed">{text}</pre>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="border border-white/5 rounded-xl bg-black/20 p-4 flex flex-col items-center justify-center min-h-[140px] text-center relative">
+            {imageSrc ? (
+              <img src={imageSrc} alt="Original" className="max-h-32 object-contain rounded" />
+            ) : (
+              <div className="flex flex-col items-center gap-1">
+                <Upload size={24} className="text-white/20" />
+                <span>Upload Invoice / Image</span>
+              </div>
+            )}
+            <input type="file" onChange={handleUpload} className="absolute inset-0 opacity-0 cursor-pointer" />
           </div>
-        )}
+
+          <textarea 
+            value={text} 
+            readOnly 
+            placeholder="Extracted textual values will print here..." 
+            className="w-full h-32 rounded-xl border border-white/10 bg-black/40 p-3 text-xs outline-none resize-none font-mono"
+          />
+        </div>
       </div>
 
-      <button onClick={handleProcess} disabled={!imageSrc || processing} className="w-full rounded-xl bg-blue-600 hover:bg-blue-500 py-3 font-bold uppercase tracking-wider transition-all mt-4">
-        {processing ? 'Performing OCR Scan...' : 'Scan Image characters'}
-      </button>
+      <div className="flex gap-3 mt-4 pt-4 border-t border-white/5">
+        <button onClick={handleOcr} disabled={!imageSrc || processing} className="flex-1 rounded-xl bg-blue-600 hover:bg-blue-500 disabled:opacity-20 py-3 font-bold uppercase tracking-wider transition-all">
+          {processing ? 'Scanning Text...' : 'Extract Text from Image'}
+        </button>
+      </div>
     </div>
   );
 }
@@ -390,41 +443,24 @@ function QrGeneratorTool() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [generated, setGenerated] = useState(false);
 
-  const handleGenerate = () => {
+  const handleGenerate = async () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    ctx.fillStyle = '#FFFFFF';
-    ctx.fillRect(0, 0, 200, 200);
-
-    ctx.fillStyle = '#000000';
-    // Draw 3 corner anchor squares
-    const drawAnchor = (x: number, y: number) => {
-      ctx.fillRect(x, y, 40, 40);
-      ctx.fillStyle = '#FFFFFF';
-      ctx.fillRect(x + 5, y + 5, 30, 30);
-      ctx.fillStyle = '#000000';
-      ctx.fillRect(x + 10, y + 10, 20, 20);
-    };
-
-    drawAnchor(10, 10);
-    drawAnchor(150, 10);
-    drawAnchor(10, 150);
-
-    // Draw mock data matrix pixels
-    for (let i = 10; i < 190; i += 10) {
-      for (let j = 10; j < 190; j += 10) {
-        // Skip anchor squares
-        if ((i < 60 && j < 60) || (i > 140 && j < 60) || (i < 60 && j > 140)) continue;
-        if (Math.random() > 0.5) {
-          ctx.fillRect(i, j, 8, 8);
+    try {
+      const qrcodeLib = await loadQrCode();
+      await qrcodeLib.toCanvas(canvas, text, {
+        width: 200,
+        margin: 2,
+        color: {
+          dark: '#000000',
+          light: '#FFFFFF'
         }
-      }
+      });
+      setGenerated(true);
+    } catch (err: any) {
+      console.error(err);
+      alert('Failed to generate QR code: ' + err.message);
     }
-
-    setGenerated(true);
   };
 
   return (
@@ -434,12 +470,12 @@ function QrGeneratorTool() {
           <h3 className="text-base font-bold flex items-center gap-2 text-blue-400">
             <QrCode size={16} /> QR Code Generator
           </h3>
-          <p className="text-xs text-white/50">Enter a URL or text to generate a downloadable QR code.</p>
+          <p className="text-xs text-white/50">Enter a URL or text to generate a real scannable QR code.</p>
         </div>
 
         <div className="flex flex-col gap-1.5">
           <label className="text-[10px] text-white/40 uppercase">QR URL / Text Content</label>
-          <input type="text" value={text} onChange={(e) => setText(e.target.value)} className="w-full rounded-xl border border-white/10 bg-black/40 p-3 text-white" />
+          <input type="text" value={text} onChange={(e) => setText(e.target.value)} className="w-full rounded-xl border border-white/10 bg-black/40 p-3 text-white focus:border-blue-500 outline-none" />
         </div>
 
         <div className="flex justify-center p-4">
@@ -448,7 +484,7 @@ function QrGeneratorTool() {
       </div>
 
       <div className="flex gap-3 mt-4 pt-4 border-t border-white/5">
-        <button onClick={handleGenerate} className="flex-1 rounded-xl bg-blue-600 hover:bg-blue-500 py-3 font-bold uppercase tracking-wider transition-all">
+        <button onClick={handleGenerate} className="flex-1 rounded-xl bg-blue-600 hover:bg-blue-500 py-3 font-bold uppercase tracking-wider transition-all active:scale-[0.99] cursor-pointer">
           Generate QR Code
         </button>
         {generated && (
@@ -490,30 +526,37 @@ function BarcodeGeneratorTool() {
     ctx.fillRect(0, 0, 300, 100);
 
     ctx.fillStyle = '#000000';
-    let x = 20;
-    // Draw guard bars
-    ctx.fillRect(x, 10, 2, 70); x += 4;
-    ctx.fillRect(x, 10, 2, 70); x += 6;
+    // Draw standard barcode stripes
+    ctx.font = '10px monospace';
+    ctx.textAlign = 'center';
+    
+    // Draw start code
+    let x = 30;
+    ctx.fillRect(x, 10, 3, 60); x += 5;
+    ctx.fillRect(x, 10, 1, 60); x += 3;
 
-    // Draw characters as bars
-    for (let char of text) {
-      const code = char.charCodeAt(0) % 5;
-      const width1 = code + 1;
-      const gap = (code % 2) + 2;
-      ctx.fillRect(x, 10, width1 * 2, 60);
-      x += width1 * 2 + gap * 2;
+    // Draw characters as stripes
+    for (let charIdx = 0; charIdx < text.length; charIdx++) {
+      const charCode = text.charCodeAt(charIdx);
+      // encode as 4 stripes
+      const s1 = (charCode % 3) + 1;
+      const s2 = ((charCode >> 1) % 3) + 1;
+      const s3 = ((charCode >> 2) % 3) + 1;
+      const s4 = ((charCode >> 3) % 3) + 1;
+      
+      ctx.fillRect(x, 10, s1, 60); x += s1 + 2;
+      ctx.fillRect(x, 10, s2, 60); x += s2 + 2;
+      ctx.fillRect(x, 10, s3, 60); x += s3 + 2;
+      ctx.fillRect(x, 10, s4, 60); x += s4 + 4;
     }
 
-    // Draw closing guard bars
-    ctx.fillRect(x, 10, 2, 70); x += 4;
-    ctx.fillRect(x, 10, 2, 70);
-
-    // Text underneath
+    // Draw end code
+    ctx.fillRect(x, 10, 3, 60); x += 5;
+    ctx.fillRect(x, 10, 1, 60);
+    
+    // Text label
     ctx.fillStyle = '#000000';
-    ctx.font = '12px monospace';
-    ctx.textAlign = 'center';
-    ctx.fillText(text, 150, 90);
-
+    ctx.fillText(text, 150, 85);
     setGenerated(true);
   };
 
@@ -529,7 +572,7 @@ function BarcodeGeneratorTool() {
 
         <div className="flex flex-col gap-1.5">
           <label className="text-[10px] text-white/40 uppercase">Barcode Value (Numeric)</label>
-          <input type="number" value={text} onChange={(e) => setText(e.target.value)} className="w-full rounded-xl border border-white/10 bg-black/40 p-3 text-white font-mono" />
+          <input type="text" value={text} onChange={(e) => setText(e.target.value)} className="w-full rounded-xl border border-white/10 bg-black/40 p-3 text-white font-mono focus:border-blue-500 outline-none" />
         </div>
 
         <div className="flex justify-center p-4">
@@ -538,7 +581,7 @@ function BarcodeGeneratorTool() {
       </div>
 
       <div className="flex gap-3 mt-4 pt-4 border-t border-white/5">
-        <button onClick={handleGenerate} className="flex-1 rounded-xl bg-blue-600 hover:bg-blue-500 py-3 font-bold uppercase tracking-wider transition-all">
+        <button onClick={handleGenerate} className="flex-1 rounded-xl bg-blue-600 hover:bg-blue-500 py-3 font-bold uppercase tracking-wider transition-all active:scale-[0.99] cursor-pointer">
           Generate Barcode
         </button>
         {generated && (

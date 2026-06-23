@@ -1,5 +1,10 @@
 import { useState, lazy, Suspense } from 'react';
-import { ArrowLeft, Search, Briefcase, BarChart, FileSpreadsheet, Sparkles, GraduationCap, FileText, Image as ImageIcon, Code, DollarSign } from 'lucide-react';
+import { 
+  ArrowLeft, Search, Briefcase, BarChart, FileSpreadsheet, Sparkles, GraduationCap, FileText, Image as ImageIcon, Code, DollarSign,
+  FileCheck, ClipboardList, BadgeInfo, User, Linkedin, FileSignature, HelpCircle, Calculator,
+  Database, TableProperties, BarChart3, LineChart, Trash2, Copy, ShieldAlert, Palette, Mail,
+  BookOpen, Percent, CalendarRange, Map, Milestone, Combine, Split, Shrink, ImageUp, QrCode, ScanBarcode, FileCode, Terminal, Binary, Landmark, LandmarkIcon
+} from 'lucide-react';
 
 // Lazy load tool category components
 const CareerTools = lazy(() => import('./tools/CareerTools'));
@@ -115,6 +120,95 @@ const CATEGORIES = [
   { id: 'developer', label: 'Developer Tools', icon: Code, color: 'text-indigo-400', border: 'hover:border-indigo-500/30' },
   { id: 'business', label: 'Business & Finance', icon: DollarSign, color: 'text-teal-400', border: 'hover:border-teal-500/30' }
 ];
+
+const getToolIcon = (id: string) => {
+  switch (id) {
+    // Career
+    case 'ats-checker': return FileCheck;
+    case 'bullet-gen': return ClipboardList;
+    case 'skill-suggest': return BadgeInfo;
+    case 'summary-gen': return User;
+    case 'headline-gen': return Linkedin;
+    case 'about-gen': return Linkedin;
+    case 'cover-letter': return FileSignature;
+    case 'jd-analyzer': return Search;
+    case 'interview-questions': return HelpCircle;
+    case 'salary-calc': return Calculator;
+
+    // Analytics
+    case 'sql-formatter': return Database;
+    case 'dax-formatter': return Code;
+    case 'dax-gen': return TableProperties;
+    case 'kpi-gen': return BarChart3;
+    case 'dashboard-gen': return FileSpreadsheet;
+    case 'insight-gen': return LineChart;
+    case 'dataset-analyzer': return Search;
+    case 'csv-cleaner': return Trash2;
+    case 'dup-finder': return Copy;
+    case 'missing-checker': return ShieldAlert;
+    case 'pbi-theme': return Palette;
+
+    // Excel
+    case 'formula-builder': return Sparkles;
+    case 'xlookup': return Search;
+    case 'index-match': return TableProperties;
+    case 'cond-format': return Palette;
+    case 'pivot-suggest': return TableProperties;
+    case 'data-cleaning': return Trash2;
+
+    // AI
+    case 'prompt-gen': return Sparkles;
+    case 'prompt-improve': return LineChart;
+    case 'email-writer': return Mail;
+    case 'report-writer': return FileText;
+    case 'meeting-notes': return ClipboardList;
+    case 'storytelling': return BookOpen;
+
+    // Student
+    case 'cgpa-calc': return GraduationCap;
+    case 'pct-conv': return Percent;
+    case 'attendance': return CalendarRange;
+    case 'study-plan': return Map;
+    case 'roadmap': return Milestone;
+    case 'gpa-predict': return LineChart;
+
+    // PDF
+    case 'merge-pdf': return Combine;
+    case 'split-pdf': return Split;
+    case 'compress-pdf': return Shrink;
+    case 'extract-pages': return FileText;
+    case 'pdf-to-word': return FileText;
+    case 'word-to-pdf': return FileText;
+    case 'watermark': return FileSignature;
+
+    // Image
+    case 'compressor': return ImageIcon;
+    case 'resizer': return ImageIcon;
+    case 'bg-remove': return ImageUp;
+    case 'ocr-text': return Search;
+    case 'qr-gen': return QrCode;
+    case 'barcode-gen': return ScanBarcode;
+
+    // Dev
+    case 'json-formatter': return FileCode;
+    case 'json-to-csv': return FileSpreadsheet;
+    case 'csv-to-json': return FileCode;
+    case 'regex-tester': return Terminal;
+    case 'base64': return Binary;
+    case 'color-picker': return Palette;
+    case 'uuid-gen': return Code;
+
+    // Business
+    case 'roi-calc': return LineChart;
+    case 'margin-calc': return Percent;
+    case 'gst-calc': return Calculator;
+    case 'breakeven': return Landmark;
+    case 'emi-calc': return LandmarkIcon;
+    case 'revenue-forecast': return LineChart;
+
+    default: return Code;
+  }
+};
 
 export default function ToolsPage() {
   const [activeTool, setActiveTool] = useState<ToolItem | null>(null);
@@ -263,30 +357,38 @@ export default function ToolsPage() {
 
                     {/* Section Tools Grid */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                      {categoryTools.map((tool) => (
-                        <div
-                          key={tool.id}
-                          onClick={() => setActiveTool(tool)}
-                          className={`group relative rounded-2xl border border-white/5 bg-white/[0.01] p-5 hover:bg-white/[0.03] transition-all duration-300 cursor-pointer flex flex-col justify-between h-36 ${cat.border}`}
-                        >
-                          <div>
-                            <h4 className="text-xs sm:text-sm font-bold text-white group-hover:text-blue-400 transition-colors line-clamp-1">
-                              {tool.name}
-                            </h4>
-                            <p className="text-xs text-white/50 font-medium mt-1.5 leading-relaxed line-clamp-2">
-                              {tool.desc}
-                            </p>
+                      {categoryTools.map((tool) => {
+                        const ToolIcon = getToolIcon(tool.id);
+                        return (
+                          <div
+                            key={tool.id}
+                            onClick={() => setActiveTool(tool)}
+                            className={`group relative rounded-2xl border border-white/5 bg-white/[0.01] p-5 hover:bg-white/[0.03] transition-all duration-300 cursor-pointer flex flex-col justify-between h-36 ${cat.border}`}
+                          >
+                            <div>
+                              <div className="flex items-center gap-2 mb-1.5">
+                                <div className={`p-1.5 rounded-lg bg-white/5 border border-white/5 group-hover:${cat.color} transition-colors`}>
+                                  <ToolIcon size={14} />
+                                </div>
+                                <h4 className="text-xs sm:text-sm font-bold text-white group-hover:text-blue-400 transition-colors line-clamp-1">
+                                  {tool.name}
+                                </h4>
+                              </div>
+                              <p className="text-xs text-white/50 font-medium mt-1.5 leading-relaxed line-clamp-2">
+                                {tool.desc}
+                              </p>
+                            </div>
+                            <div className="flex items-center justify-between mt-4">
+                              <span className="text-[9px] uppercase tracking-wider font-extrabold text-white/30 group-hover:text-blue-400/80 transition-colors">
+                                Open Tool
+                              </span>
+                              <span className="text-white/20 group-hover:translate-x-1 group-hover:text-blue-400 transition-all font-bold text-xs">
+                                &rarr;
+                              </span>
+                            </div>
                           </div>
-                          <div className="flex items-center justify-between mt-4">
-                            <span className="text-[9px] uppercase tracking-wider font-extrabold text-white/30 group-hover:text-blue-400/80 transition-colors">
-                              Open Tool
-                            </span>
-                            <span className="text-white/20 group-hover:translate-x-1 group-hover:text-blue-400 transition-all font-bold text-xs">
-                              &rarr;
-                            </span>
-                          </div>
-                        </div>
-                      ))}
+                        );
+                      })}
                     </div>
                   </section>
                 );

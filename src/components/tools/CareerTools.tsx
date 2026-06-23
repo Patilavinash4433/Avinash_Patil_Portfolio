@@ -1,5 +1,23 @@
 import { useState } from 'react';
-import { Copy, Check, Sparkles, Send, RefreshCw, Calculator, Briefcase, FileText } from 'lucide-react';
+import { Copy, Check, Sparkles, Send, RefreshCw, Calculator, Briefcase, FileText, Upload } from 'lucide-react';
+
+const loadPdfJs = () => {
+  return new Promise<any>((resolve, reject) => {
+    if ((window as any).pdfjsLib) {
+      resolve((window as any).pdfjsLib);
+      return;
+    }
+    const script = document.createElement('script');
+    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js';
+    script.onload = () => {
+      const pdfjs = (window as any).pdfjsLib;
+      pdfjs.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+      resolve(pdfjs);
+    };
+    script.onerror = reject;
+    document.body.appendChild(script);
+  });
+};
 
 export default function CareerTools({ activeToolId, hideSidebar }: { activeToolId?: string; hideSidebar?: boolean } = {}) {
   const [activeTool, setActiveTool] = useState<string>(activeToolId || 'ats-checker');
@@ -67,12 +85,61 @@ function AtsCheckerTool({ onCopy, copied }: { onCopy: any; copied: any }) {
   const [jd, setJd] = useState('');
   const [resume, setResume] = useState('');
   const [result, setResult] = useState<any>(null);
+  const [isParsing, setIsParsing] = useState(false);
+  const [fileName, setFileName] = useState('');
+
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setIsParsing(true);
+    setFileName(file.name);
+
+    try {
+      if (file.name.endsWith('.pdf')) {
+        const reader = new FileReader();
+        reader.onload = async function () {
+          try {
+            const typedarray = new Uint8Array(this.result as ArrayBuffer);
+            const pdfjs = await loadPdfJs();
+            const pdf = await pdfjs.getDocument({ data: typedarray }).promise;
+            let text = '';
+            for (let i = 1; i <= pdf.numPages; i++) {
+              const page = await pdf.getPage(i);
+              const content = await page.getTextContent();
+              const strings = content.items.map((item: any) => item.str);
+              text += strings.join(' ') + '\n';
+            }
+            setResume(text);
+          } catch (err) {
+            console.error(err);
+            alert('Failed to parse PDF file. Please paste text directly or try another file.');
+          } finally {
+            setIsParsing(false);
+          }
+        };
+        reader.readAsArrayBuffer(file);
+      } else if (file.name.endsWith('.txt')) {
+        const reader = new FileReader();
+        reader.onload = (evt) => {
+          setResume(evt.target?.result as string || '');
+          setIsParsing(false);
+        };
+        reader.readAsText(file);
+      } else {
+        alert('Unsupported file format. Please upload a PDF or TXT file.');
+        setIsParsing(false);
+      }
+    } catch (err) {
+      console.error(err);
+      setIsParsing(false);
+    }
+  };
 
   const handleAnalyze = () => {
     if (!jd.trim() || !resume.trim()) return;
     
     // Extract keywords (longer words, ignoring numbers and common stopwords)
-    const stopWords = new Set(['the', 'and', 'with', 'for', 'this', 'that', 'from', 'your', 'about', 'will', 'have', 'been', 'would', 'should']);
+    const stopWords = new Set(['the', 'and', 'with', 'for', 'this', 'that', 'from', 'your', 'about', 'will', 'have', 'been', 'would', 'should', 'are', 'was', 'were', 'had', 'has', 'have']);
     const extractKeywords = (text: string) => {
       return text.toLowerCase()
         .replace(/[^a-zA-Z\s#+]/g, ' ')
@@ -85,13 +152,13 @@ function AtsCheckerTool({ onCopy, copied }: { onCopy: any; copied: any }) {
     
     // Check match intersection
     const matching = jdWords.filter(w => resumeWords.has(w));
-    const missing = jdWords.filter(w => !resumeWords.has(w)).slice(0, 8);
+    const missing = jdWords.filter(w => !resumeWords.has(w)).slice(0, 10);
     
     const score = Math.round((matching.length / (jdWords.length || 1)) * 100);
     
     setResult({
-      score: Math.min(score + 35, 95), // Normalize to a realistic score range
-      matching: matching.slice(0, 10),
+      score: Math.min(score + 35, 98), // Normalize to a realistic score range
+      matching: matching.slice(0, 12),
       missing
     });
   };
@@ -102,7 +169,28 @@ function AtsCheckerTool({ onCopy, copied }: { onCopy: any; copied: any }) {
         <h3 className="text-base font-bold flex items-center gap-2 text-blue-400">
           <Sparkles size={16} /> Resume ATS Checker
         </h3>
-        <p className="text-xs text-white/50">Analyze how well your resume matches a target job description.</p>
+        <p className="text-xs text-white/50">Upload a PDF or TXT resume and paste a Job Description to verify ATS compatibility.</p>
+      </div>
+
+      {/* File Upload Zone */}
+      <div className="border border-dashed border-white/10 hover:border-blue-500/50 rounded-xl bg-black/20 p-5 flex flex-col items-center justify-center text-center gap-2 transition-colors relative cursor-pointer group">
+        <Upload size={24} className="text-white/30 group-hover:text-blue-400 transition-colors" />
+        <div className="text-xs font-semibold text-white/70">
+          {isParsing ? (
+            <span className="text-blue-400 font-bold animate-pulse">Extracting text from PDF resume...</span>
+          ) : fileName ? (
+            <span className="text-green-400 font-bold">Successfully Loaded: {fileName}</span>
+          ) : (
+            <span>Drag & Drop or <span className="text-blue-450 text-blue-400 underline font-bold">Browse</span> PDF / TXT resume</span>
+          )}
+        </div>
+        <p className="text-[10px] text-white/30">Processed client-side. Your files never leave your computer.</p>
+        <input
+          type="file"
+          accept=".pdf,.txt"
+          onChange={handleFileUpload}
+          className="absolute inset-0 opacity-0 cursor-pointer"
+        />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -116,11 +204,21 @@ function AtsCheckerTool({ onCopy, copied }: { onCopy: any; copied: any }) {
           />
         </div>
         <div className="flex flex-col gap-1.5">
-          <label className="text-[10px] uppercase tracking-wider font-bold text-white/40">Resume Text</label>
+          <div className="flex justify-between items-center">
+            <label className="text-[10px] uppercase tracking-wider font-bold text-white/40">Resume Text</label>
+            {resume && (
+              <button
+                onClick={() => setResume('')}
+                className="text-[9px] uppercase font-bold text-red-400 hover:underline"
+              >
+                Clear Text
+              </button>
+            )}
+          </div>
           <textarea
             value={resume}
             onChange={(e) => setResume(e.target.value)}
-            placeholder="Paste your plain resume text here..."
+            placeholder="Parsed resume text will appear here automatically, or you can paste it directly..."
             className="w-full h-36 rounded-xl border border-white/10 bg-black/40 p-3 text-xs focus:border-blue-500 outline-none resize-none font-medium placeholder-white/20"
           />
         </div>
@@ -128,7 +226,7 @@ function AtsCheckerTool({ onCopy, copied }: { onCopy: any; copied: any }) {
 
       <button
         onClick={handleAnalyze}
-        disabled={!jd.trim() || !resume.trim()}
+        disabled={!jd.trim() || !resume.trim() || isParsing}
         className="w-full rounded-xl bg-blue-600 hover:bg-blue-500 disabled:opacity-30 py-3 text-xs font-bold uppercase tracking-wider transition-all active:scale-[0.98]"
       >
         Analyze Match Score
@@ -138,7 +236,7 @@ function AtsCheckerTool({ onCopy, copied }: { onCopy: any; copied: any }) {
         <div className="mt-4 border border-white/5 rounded-xl bg-black/30 p-4 space-y-4">
           <div className="flex items-center gap-4">
             {/* Score Ring */}
-            <div className="relative w-16 h-16 shrink-0 flex items-center justify-center rounded-full border-4 border-white/5">
+            <div className="relative w-16 h-16 shrink-0 flex items-center justify-center rounded-full border-4 border-white/5 bg-black/50">
               <span className={`text-base font-black ${result.score > 75 ? 'text-green-400' : result.score > 55 ? 'text-yellow-400' : 'text-red-400'}`}>
                 {result.score}%
               </span>
@@ -153,25 +251,25 @@ function AtsCheckerTool({ onCopy, copied }: { onCopy: any; copied: any }) {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
             <div>
-              <h5 className="font-bold text-green-400 mb-2">Matching Keywords</h5>
+              <h5 className="font-bold text-green-400 mb-2">Matching Keywords ({result.matching.length})</h5>
               <div className="flex flex-wrap gap-1.5">
                 {result.matching.length > 0 ? (
                   result.matching.map((w: string, idx: number) => (
-                    <span key={idx} className="rounded-full bg-green-500/10 border border-green-500/20 px-2 py-0.5 text-[10px] text-green-300">
+                    <span key={idx} className="rounded-full bg-green-500/10 border border-green-500/20 px-2 py-0.5 text-[10px] text-green-300 font-semibold uppercase">
                       {w}
                     </span>
                   ))
                 ) : (
-                  <span className="text-white/40">No keywords found.</span>
+                  <span className="text-white/40">No matching keywords found.</span>
                 )}
               </div>
             </div>
             <div>
-              <h5 className="font-bold text-red-400 mb-2">Missing Key Keywords</h5>
+              <h5 className="font-bold text-red-400 mb-2">Missing Key Keywords ({result.missing.length})</h5>
               <div className="flex flex-wrap gap-1.5">
                 {result.missing.length > 0 ? (
                   result.missing.map((w: string, idx: number) => (
-                    <span key={idx} className="rounded-full bg-red-500/10 border border-red-500/20 px-2 py-0.5 text-[10px] text-red-300">
+                    <span key={idx} className="rounded-full bg-red-500/10 border border-red-500/20 px-2 py-0.5 text-[10px] text-red-300 font-semibold uppercase">
                       {w}
                     </span>
                   ))
