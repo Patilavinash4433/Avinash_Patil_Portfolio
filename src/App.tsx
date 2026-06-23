@@ -5,10 +5,11 @@ import AboutSection from './components/AboutSection';
 const ServicesSection = lazy(() => import('./components/ServicesSection'));
 const ProjectsSection = lazy(() => import('./components/ProjectsSection'));
 const CertificationsSection = lazy(() => import('./components/CertificationsSection'));
-const RecruiterHub = lazy(() => import('./components/RecruiterHub'));
+const ResumeToolsHub = lazy(() => import('./components/ResumeToolsHub'));
 const ContactSection = lazy(() => import('./components/ContactSection'));
 const AIChatBot = lazy(() => import('./components/AIChatBot'));
 const ResumePage = lazy(() => import('./components/ResumePage'));
+const ToolsPage = lazy(() => import('./components/ToolsPage'));
 
 const App = () => {
   const [currentHash, setCurrentHash] = useState(window.location.hash);
@@ -21,7 +22,7 @@ const App = () => {
     
     // Clear section hashes on reload to always start at Home/top
     const initialHash = window.location.hash;
-    if (initialHash && initialHash !== '#/resume') {
+    if (initialHash && initialHash !== '#/resume' && initialHash !== '#/tools') {
       window.history.replaceState(null, '', window.location.pathname + window.location.search);
       setCurrentHash('');
     }
@@ -30,7 +31,7 @@ const App = () => {
     const handleHashChange = () => {
       const hash = window.location.hash;
       setCurrentHash(hash);
-      if (hash === '#/resume' || !hash || hash === '#' || hash === '#/') {
+      if (hash === '#/resume' || hash === '#/tools' || !hash || hash === '#' || hash === '#/') {
         window.scrollTo(0, 0);
       }
     };
@@ -39,7 +40,7 @@ const App = () => {
     (window as any).__routeTo = (hash: string) => {
       window.location.hash = hash;
       setCurrentHash(hash);
-      if (hash === '#/resume' || !hash || hash === '#' || hash === '#/') {
+      if (hash === '#/resume' || hash === '#/tools' || !hash || hash === '#' || hash === '#/') {
         window.scrollTo(0, 0);
       }
     };
@@ -74,6 +75,7 @@ const App = () => {
   }, [currentHash]);
 
   const isResumeView = currentHash === '#/resume';
+  const isToolsView = currentHash === '#/tools';
 
   return (
     <main
@@ -83,6 +85,8 @@ const App = () => {
       <Suspense fallback={<div className="min-h-[100vh] bg-[#0C0C0C] flex items-center justify-center text-white font-mono text-sm">Loading...</div>}>
         {isResumeView ? (
           <ResumePage />
+        ) : isToolsView ? (
+          <ToolsPage />
         ) : (
           <>
             <HeroSection />
@@ -90,7 +94,7 @@ const App = () => {
             <ServicesSection />
             <ProjectsSection />
             <CertificationsSection />
-            <RecruiterHub />
+            <ResumeToolsHub />
             <ContactSection />
             <AIChatBot />
           </>

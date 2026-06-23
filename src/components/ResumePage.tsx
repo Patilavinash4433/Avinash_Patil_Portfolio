@@ -171,7 +171,7 @@ const INITIAL_RESUME_DATA: ResumeData = {
 
 export default function ResumePage() {
   const [resumeData, setResumeData] = useState<ResumeData>(INITIAL_RESUME_DATA);
-  const [activeTab, setActiveTab] = useState<'edit' | 'preview'>('edit');
+  const [activeTab, setActiveTab] = useState<'edit' | 'preview'>('preview');
   const [editorSection, setEditorSection] = useState<string>('profile');
 
   const [scale, setScale] = useState(1);
@@ -292,17 +292,11 @@ export default function ResumePage() {
           </a>
           <div>
             <h1 className="text-sm sm:text-base font-black uppercase tracking-wider">Resume Workspace</h1>
-            <p className="text-[10px] text-[#D7E2EA]/40 uppercase tracking-widest font-semibold">A4 Resume Template Editor</p>
+            <p className="text-[10px] text-[#D7E2EA]/40 uppercase tracking-widest font-semibold">A4 Professional Resume</p>
           </div>
         </div>
 
         <div className="flex items-center gap-2">
-          <button
-            onClick={handleReset}
-            className="hidden sm:inline-flex items-center gap-1.5 rounded-xl border border-white/10 bg-[#141418] hover:bg-white/5 px-4 py-2.5 text-xs font-bold uppercase tracking-widest text-[#D7E2EA] transition-all cursor-pointer"
-          >
-            <RotateCcw size={12} /> Reset Original
-          </button>
           
           <button
             onClick={handlePrint}
@@ -313,33 +307,13 @@ export default function ResumePage() {
         </div>
       </header>
 
-      {/* Mobile Tab Swapper */}
-      <div className="no-print lg:hidden shrink-0 flex border-b border-white/5 bg-[#101014]">
-        <button
-          onClick={() => setActiveTab('edit')}
-          className={`flex-1 py-3.5 text-xs font-bold uppercase tracking-wider text-center border-b-2 transition-all cursor-pointer ${
-            activeTab === 'edit' ? 'border-[#007AFF] text-[#007AFF] bg-white/[0.02]' : 'border-transparent text-[#D7E2EA]/40'
-          }`}
-        >
-          Edit Resume Details
-        </button>
-        <button
-          onClick={() => setActiveTab('preview')}
-          className={`flex-1 py-3.5 text-xs font-bold uppercase tracking-wider text-center border-b-2 transition-all cursor-pointer ${
-            activeTab === 'preview' ? 'border-[#007AFF] text-[#007AFF] bg-white/[0.02]' : 'border-transparent text-[#D7E2EA]/40'
-          }`}
-        >
-          Preview A4 PDF
-        </button>
-      </div>
+      {/* Mobile Tab Swapper - Hidden as editing is disabled */}
 
       {/* Main Workspace Frame */}
       <div id="resume-workspace-frame" className="flex-1 flex overflow-hidden min-h-0">
         
-        {/* LEFT PANEL: RESUME FORM EDITOR */}
-        <div className={`no-print flex-col w-full lg:w-[40%] border-r border-white/10 bg-[#141418]/40 overflow-y-auto shrink-0 ${
-          activeTab === 'edit' ? 'flex' : 'hidden lg:flex'
-        }`}>
+        {/* LEFT PANEL: RESUME FORM EDITOR (Hidden as editing is disabled) */}
+        <div className="hidden">
           {/* Section Selector Pills */}
           <div className="flex gap-2 p-4 border-b border-white/5 overflow-x-auto scrollbar-none scroll-smooth">
             {[
