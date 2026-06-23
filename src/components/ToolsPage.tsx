@@ -110,6 +110,7 @@ const ALL_TOOLS: ToolItem[] = [
 ];
 
 const CATEGORIES = [
+  { id: 'business', label: 'Business & Finance', icon: DollarSign, color: 'text-teal-400', border: 'hover:border-teal-500/30' },
   { id: 'career', label: 'Resume & Career', icon: Briefcase, color: 'text-blue-400', border: 'hover:border-blue-500/30' },
   { id: 'analytics', label: 'Data Analytics', icon: BarChart, color: 'text-cyan-400', border: 'hover:border-cyan-500/30' },
   { id: 'excel', label: 'Excel Tools', icon: FileSpreadsheet, color: 'text-emerald-400', border: 'hover:border-emerald-500/30' },
@@ -117,8 +118,7 @@ const CATEGORIES = [
   { id: 'student', label: 'Student Tools', icon: GraduationCap, color: 'text-purple-400', border: 'hover:border-purple-500/30' },
   { id: 'pdf', label: 'PDF Utilities', icon: FileText, color: 'text-red-400', border: 'hover:border-red-500/30' },
   { id: 'image', label: 'Image Tools', icon: ImageIcon, color: 'text-pink-400', border: 'hover:border-pink-500/30' },
-  { id: 'developer', label: 'Developer Tools', icon: Code, color: 'text-indigo-400', border: 'hover:border-indigo-500/30' },
-  { id: 'business', label: 'Business & Finance', icon: DollarSign, color: 'text-teal-400', border: 'hover:border-teal-500/30' }
+  { id: 'developer', label: 'Developer Tools', icon: Code, color: 'text-indigo-400', border: 'hover:border-indigo-500/30' }
 ];
 
 const getToolIcon = (id: string) => {

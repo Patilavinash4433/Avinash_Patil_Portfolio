@@ -68,7 +68,16 @@ function JsonFormatterTool({ onCopy, copied }: { onCopy: any; copied: any }) {
       const parsed = JSON.parse(json);
       setFormatted(JSON.stringify(parsed, null, 2));
     } catch (e: any) {
-      setError(e.message || 'Invalid JSON format');
+      const match = e.message.match(/position\s+(\d+)/);
+      if (match) {
+        const pos = parseInt(match[1]);
+        const textBefore = json.slice(0, pos);
+        const lineNum = textBefore.split('\n').length;
+        const colNum = pos - textBefore.lastIndexOf('\n');
+        setError(`Syntax Error: ${e.message} (Line ${lineNum}, Column ${colNum})`);
+      } else {
+        setError(`Syntax Error: ${e.message}`);
+      }
       setFormatted('');
     }
   };

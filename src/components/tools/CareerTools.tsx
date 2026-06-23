@@ -236,8 +236,22 @@ function AtsCheckerTool({ onCopy, copied }: { onCopy: any; copied: any }) {
         <div className="mt-4 border border-white/5 rounded-xl bg-black/30 p-4 space-y-4">
           <div className="flex items-center gap-4">
             {/* Score Ring */}
-            <div className="relative w-16 h-16 shrink-0 flex items-center justify-center rounded-full border-4 border-white/5 bg-black/50">
-              <span className={`text-base font-black ${result.score > 75 ? 'text-green-400' : result.score > 55 ? 'text-yellow-400' : 'text-red-400'}`}>
+            <div className="relative w-16 h-16 shrink-0 flex items-center justify-center">
+              <svg width="64" height="64" className="rotate-[-90deg]">
+                <circle cx="32" cy="32" r="26" fill="transparent" stroke="rgba(255,255,255,0.05)" strokeWidth="4" />
+                <circle 
+                  cx="32" 
+                  cy="32" 
+                  r="26" 
+                  fill="transparent" 
+                  stroke={result.score > 75 ? '#4ADE80' : result.score > 55 ? '#FACC15' : '#F87171'} 
+                  strokeWidth="4" 
+                  strokeDasharray="163.3" 
+                  strokeDashoffset={163.3 * (1 - result.score / 100)} 
+                  className="transition-all duration-1000 ease-out"
+                />
+              </svg>
+              <span className={`absolute text-sm font-black ${result.score > 75 ? 'text-green-400' : result.score > 55 ? 'text-yellow-400' : 'text-red-400'}`}>
                 {result.score}%
               </span>
             </div>
