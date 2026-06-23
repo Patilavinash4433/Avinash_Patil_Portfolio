@@ -1,15 +1,20 @@
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Eye, X } from 'lucide-react';
 import FadeIn from './FadeIn';
 import ContactButton from './ContactButton';
 import AnimatedText from './AnimatedText';
 
 const ABOUT_PARAGRAPHS = [
-  "I am an Information Technology (IT) student at GTU and currently working as a Data Analytics Intern at QuadSync Tech Solutions. I am passionate about transforming raw data into meaningful insights that help businesses make smarter, data-driven decisions.",
-  "My expertise includes SQL, Power BI, Python, Tableau, and Excel, with a strong focus on data analysis, dashboard development, reporting automation, and business intelligence. I enjoy working with complex datasets, identifying trends, and building interactive dashboards that turn data into actionable business insights.",
-  "Alongside my internship, I work as a Computer Trainer at Tech-G Computer Academy, where I teach students computer fundamentals, programming, Excel, SQL, Power BI, and data analytics. This experience has strengthened my communication, leadership, and problem-solving skills while allowing me to help others build technical expertise.",
-  "I believe that data is more than just numbers—it is a powerful asset that drives innovation, growth, and strategic decision-making. My goal is to create impactful analytics solutions that help organizations unlock the full potential of their data."
+  "Hi, I'm Avinash Patil, a Data Analyst at Indo Era and a B.Sc. IT student passionate about transforming raw data into meaningful business insights.",
+  "I specialize in Excel, SQL, Power BI, and Python, with a strong focus on data analysis, dashboard development, business intelligence, and reporting automation. I enjoy working with complex datasets, uncovering trends, and building data-driven solutions that help organizations make smarter decisions.",
+  "As the first Data Analyst in my organization, I work on analyzing business data, identifying growth opportunities, improving reporting processes, and creating actionable dashboards that support strategic decision-making.",
+  "Beyond analytics, I have experience as a Computer Trainer, where I have guided students in Excel, SQL, Power BI, programming, and data analytics. This experience has strengthened my communication, leadership, and problem-solving abilities.",
+  "I believe data is not just numbers—it is a powerful asset that drives innovation, efficiency, and business growth. My goal is to build impactful analytics solutions that help organizations unlock the full potential of their data."
 ];
 
 const AboutSection = () => {
+  const [selectedDoc, setSelectedDoc] = useState<string | null>(null);
   const getSkillColorClass = (item: string) => {
     const cleanItem = item.toLowerCase();
     if (cleanItem.includes('python') || cleanItem.includes('pandas') || cleanItem.includes('numpy')) {
@@ -118,7 +123,7 @@ const AboutSection = () => {
           </h2>
         </FadeIn>
 
-          <div className="flex flex-col items-center gap-12 sm:gap-16 md:gap-20">
+        <div className="flex flex-col items-center gap-12 sm:gap-16 md:gap-20">
                     <div className="flex flex-col gap-6 sm:gap-8 max-w-[680px]">
                       {ABOUT_PARAGRAPHS.map((para, idx) => (
                         <AnimatedText
@@ -129,6 +134,80 @@ const AboutSection = () => {
                         />
                       ))}
                     </div>
+
+                    {/* QuadSync Internship & Certificates */}
+                    <FadeIn delay={0.1} className="w-full max-w-[720px]">
+                      <div className="rounded-[28px] border border-white/10 bg-[#141418]/30 backdrop-blur-md p-6 sm:p-8 text-left transition-all duration-300 hover:border-white/15">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/5 pb-5 mb-6">
+                          <div>
+                            <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-widest text-teal-400">
+                              Internship Completed
+                            </span>
+                            <h3 className="text-xl sm:text-2xl font-bold text-white mt-1">
+                              QuadSync Tech Solutions
+                            </h3>
+                            <p className="text-sm text-[#D7E2EA]/60 font-medium">
+                              Data Analyst Intern
+                            </p>
+                          </div>
+                          <div className="text-left sm:text-right shrink-0">
+                            <span className="inline-block rounded-full border border-white/10 bg-white/5 px-3.5 py-1 text-xs text-[#D7E2EA]/85 font-medium">
+                              April 20, 2026 – June 20, 2026
+                            </span>
+                          </div>
+                        </div>
+                        
+                        <p className="text-sm sm:text-base text-[#D7E2EA]/75 leading-relaxed mb-6 font-medium">
+                          During this 2-month training-based internship, I actively worked on analyzing business data, designing dashboard mockups, writing SQL queries, and preparing data-driven presentations. This experience deepened my understanding of industry workflows, structured data handling, and analytics storytelling.
+                        </p>
+
+                        {/* Document Previews */}
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                          {[
+                            {
+                              title: "Internship Appreciation Certificate",
+                              image: "/quadsync-appreciation.webp",
+                              label: "Appreciation Cert."
+                            },
+                            {
+                              title: "Internship Completion Certificate",
+                              image: "/quadsync-completion.webp",
+                              label: "Completion Cert."
+                            },
+                            {
+                              title: "Letter of Recommendation",
+                              image: "/quadsync-lor.webp",
+                              label: "Recommendation LOR"
+                            }
+                          ].map((doc, idx) => (
+                            <div
+                              key={idx}
+                              onClick={() => setSelectedDoc(doc.image)}
+                              className="group/doc relative overflow-hidden rounded-2xl border border-white/5 bg-[#0C0C0C]/50 p-2.5 cursor-zoom-in transition-all duration-300 hover:border-teal-500/30 hover:bg-[#141418] hover:shadow-[0_0_20px_rgba(20,184,166,0.1)]"
+                            >
+                              <div className="aspect-[4/3] w-full rounded-xl overflow-hidden bg-[#141418] border border-white/5">
+                                <img
+                                  src={doc.image}
+                                  alt={doc.title}
+                                  className="w-full h-full object-cover transition-transform duration-500 group-hover/doc:scale-105"
+                                />
+                                {/* Hover overlay */}
+                                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover/doc:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                  <div className="rounded-full bg-teal-500/20 border border-teal-500/30 p-2 text-teal-400 backdrop-blur-sm transform scale-90 group-hover/doc:scale-100 transition-all duration-300">
+                                    <Eye size={16} />
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="mt-2 text-center">
+                                <span className="text-[10px] font-semibold uppercase tracking-wider text-[#D7E2EA]/50 group-hover/doc:text-teal-400 transition-colors duration-300 block truncate px-1">
+                                  {doc.label}
+                                </span>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </FadeIn>
 
                     {/* Skills */}
                     <FadeIn delay={0.15} className="w-full max-w-3xl">
@@ -184,7 +263,44 @@ const AboutSection = () => {
                     <FadeIn delay={0.25}>
                       <ContactButton />
                     </FadeIn>
-                  </div>      </div>
+                  </div>
+      </div>
+
+      {/* Lightbox Modal */}
+      <AnimatePresence>
+        {selectedDoc && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedDoc(null)}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 sm:p-6 md:p-10 cursor-zoom-out"
+          >
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative max-w-5xl max-h-[90vh] overflow-hidden rounded-2xl border border-white/20 bg-[#0C0C0C] p-2"
+            >
+              {/* Close Button */}
+              <button
+                onClick={() => setSelectedDoc(null)}
+                className="absolute top-4 right-4 z-10 rounded-full bg-black/60 p-2 text-white/80 hover:text-white hover:bg-black/80 transition-colors duration-200"
+              >
+                <X size={20} />
+              </button>
+
+              <img
+                src={selectedDoc}
+                alt="Internship Document"
+                className="max-w-full max-h-[85vh] object-contain rounded-lg"
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };
