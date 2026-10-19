@@ -141,9 +141,9 @@ const AboutSection = () => {
                       <div className="rounded-[28px] border border-emerald-500/25 bg-[#141418]/50 backdrop-blur-md p-6 sm:p-8 text-left transition-all duration-300 hover:border-emerald-500/40 hover:shadow-[0_0_40px_rgba(16,185,129,0.10)]">
                         {/* Header Row: Logo + Info + Badge */}
                         <div className="flex flex-col sm:flex-row sm:items-start gap-5 border-b border-white/5 pb-6 mb-6">
-                          {/* Company Logo - Real Indo Era Logo */}
-                          <div className="shrink-0 h-16 w-16 rounded-2xl overflow-hidden border border-white/10 shadow-[0_0_20px_rgba(251,146,60,0.20)] bg-white">
-                            <img src="/indo-era-logo.png" alt="Indo Era" className="h-full w-full object-cover" />
+                          {/* Indo Era Real Logo — full circle visible */}
+                          <div className="shrink-0 h-16 w-16 rounded-2xl overflow-hidden border border-orange-400/20 shadow-[0_0_20px_rgba(251,146,60,0.25)] bg-white flex items-center justify-center p-1">
+                            <img src="/indo-era-logo.png" alt="Indo Era" className="h-full w-full object-contain" />
                           </div>
                           {/* Company Info */}
                           <div className="flex-1 min-w-0">
@@ -184,9 +184,9 @@ const AboutSection = () => {
                       <div className="rounded-[28px] border border-white/10 bg-[#141418]/30 backdrop-blur-md p-6 sm:p-8 text-left transition-all duration-300 hover:border-white/15">
                         {/* Header Row: Logo + Info + Badge */}
                         <div className="flex flex-col sm:flex-row sm:items-start gap-5 border-b border-white/5 pb-6 mb-6">
-                          {/* Company Logo Badge */}
-                          <div className="shrink-0 h-16 w-16 rounded-2xl bg-gradient-to-br from-teal-500/15 to-cyan-600/15 border border-teal-500/25 flex items-center justify-center shadow-[0_0_15px_rgba(20,184,166,0.10)]">
-                            <span className="text-xl font-black text-teal-400 tracking-tight select-none">QS</span>
+                          {/* QuadSync Real Logo */}
+                          <div className="shrink-0 h-16 w-16 rounded-2xl overflow-hidden border border-blue-500/20 shadow-[0_0_15px_rgba(59,130,246,0.20)] bg-black flex items-center justify-center p-1.5">
+                            <img src="/quadsync-logo.jpg" alt="QuadSync" className="h-full w-full object-contain" />
                           </div>
                           {/* Company Info */}
                           <div className="flex-1 min-w-0">
@@ -272,8 +272,9 @@ const AboutSection = () => {
                     <FadeIn delay={0.15} className="w-full max-w-[720px]">
                       <div className="rounded-[28px] border border-violet-500/20 bg-[#141418]/30 backdrop-blur-md p-6 sm:p-8 text-left transition-all duration-300 hover:border-violet-500/30 hover:shadow-[0_0_30px_rgba(139,92,246,0.08)]">
                         <div className="flex flex-col sm:flex-row sm:items-start gap-5 border-b border-white/5 pb-6 mb-6">
-                          <div className="shrink-0 h-16 w-16 rounded-2xl bg-gradient-to-br from-violet-500/15 to-purple-600/15 border border-violet-500/25 flex items-center justify-center shadow-[0_0_15px_rgba(139,92,246,0.12)]">
-                            <span className="text-xl font-black text-violet-400 tracking-tight select-none">QS</span>
+                          {/* QuadSync Real Logo */}
+                          <div className="shrink-0 h-16 w-16 rounded-2xl overflow-hidden border border-blue-500/20 shadow-[0_0_15px_rgba(59,130,246,0.20)] bg-black flex items-center justify-center p-1.5">
+                            <img src="/quadsync-logo.jpg" alt="QuadSync" className="h-full w-full object-contain" />
                           </div>
                           <div className="flex-1 min-w-0">
                             <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-1">
