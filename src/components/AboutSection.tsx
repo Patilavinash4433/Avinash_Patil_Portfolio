@@ -141,9 +141,9 @@ const AboutSection = () => {
                       <div className="rounded-[28px] border border-emerald-500/25 bg-[#141418]/50 backdrop-blur-md p-6 sm:p-8 text-left transition-all duration-300 hover:border-emerald-500/40 hover:shadow-[0_0_40px_rgba(16,185,129,0.10)]">
                         {/* Header Row: Logo + Info + Badge */}
                         <div className="flex flex-col sm:flex-row sm:items-start gap-5 border-b border-white/5 pb-6 mb-6">
-                          {/* Company Logo Badge */}
-                          <div className="shrink-0 h-16 w-16 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-teal-600/20 border border-emerald-500/30 flex items-center justify-center shadow-[0_0_20px_rgba(16,185,129,0.15)]">
-                            <span className="text-2xl font-black text-emerald-400 tracking-tight select-none">IE</span>
+                          {/* Company Logo - Real Indo Era Logo */}
+                          <div className="shrink-0 h-16 w-16 rounded-2xl overflow-hidden border border-white/10 shadow-[0_0_20px_rgba(251,146,60,0.20)] bg-white">
+                            <img src="/indo-era-logo.png" alt="Indo Era" className="h-full w-full object-cover" />
                           </div>
                           {/* Company Info */}
                           <div className="flex-1 min-w-0">
@@ -259,6 +259,92 @@ const AboutSection = () => {
                               </div>
                               <div className="mt-2 text-center">
                                 <span className="text-[10px] font-semibold uppercase tracking-wider text-[#D7E2EA]/50 group-hover/doc:text-teal-400 transition-colors duration-300 block truncate px-1">
+                                  {doc.label}
+                                </span>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </FadeIn>
+
+                    {/* QuadSync AI/ML Internship */}
+                    <FadeIn delay={0.15} className="w-full max-w-[720px]">
+                      <div className="rounded-[28px] border border-violet-500/20 bg-[#141418]/30 backdrop-blur-md p-6 sm:p-8 text-left transition-all duration-300 hover:border-violet-500/30 hover:shadow-[0_0_30px_rgba(139,92,246,0.08)]">
+                        {/* Header Row: Logo + Info + Badge */}
+                        <div className="flex flex-col sm:flex-row sm:items-start gap-5 border-b border-white/5 pb-6 mb-6">
+                          {/* Company Logo */}
+                          <div className="shrink-0 h-16 w-16 rounded-2xl bg-gradient-to-br from-violet-500/15 to-purple-600/15 border border-violet-500/25 flex items-center justify-center shadow-[0_0_15px_rgba(139,92,246,0.12)]">
+                            <span className="text-xl font-black text-violet-400 tracking-tight select-none">QS</span>
+                          </div>
+                          {/* Company Info */}
+                          <div className="flex-1 min-w-0">
+                            <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-1">
+                              <h3 className="text-xl sm:text-2xl font-bold text-white">QuadSync Tech Solutions</h3>
+                              <span className="inline-flex items-center gap-1.5 rounded-full bg-violet-500/10 border border-violet-500/25 px-3 py-0.5 text-[10px] sm:text-xs font-semibold text-violet-400 uppercase tracking-wider w-fit">
+                                ✓ Completed
+                              </span>
+                            </div>
+                            <p className="text-base font-semibold text-[#D7E2EA]/85 mb-3">AI / ML Intern</p>
+                            {/* Detail Pills */}
+                            <div className="flex flex-wrap gap-2">
+                              <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] text-[#D7E2EA]/70 font-medium">
+                                📅 2026
+                              </span>
+                              <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] text-[#D7E2EA]/70 font-medium">
+                                📍 Surat, Gujarat
+                              </span>
+                              <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] text-[#D7E2EA]/70 font-medium">
+                                🎓 Internship
+                              </span>
+                              <span className="inline-flex items-center gap-1.5 rounded-full border border-violet-500/20 bg-violet-500/10 px-3 py-1 text-[11px] text-violet-300 font-medium">
+                                🤖 AI · ML · Python
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <p className="text-sm sm:text-base text-[#D7E2EA]/75 leading-relaxed mb-6 font-medium">
+                          Completed an AI/ML internship at QuadSync Tech Solutions, gaining hands-on experience in machine learning concepts, model building, and data-driven AI solutions using Python and related libraries.
+                        </p>
+                        {/* Document Previews — AI/ML */}
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                          {[
+                            {
+                              title: "AI/ML Appreciation Certificate",
+                              image: "/quadsync-aiml-appreciation.webp",
+                              label: "Appreciation Cert."
+                            },
+                            {
+                              title: "AI/ML Completion Certificate",
+                              image: "/quadsync-aiml-completion.webp",
+                              label: "Completion Cert."
+                            },
+                            {
+                              title: "Letter of Recommendation",
+                              image: "/quadsync-aiml-lor.webp",
+                              label: "Recommendation LOR"
+                            }
+                          ].map((doc, idx) => (
+                            <div
+                              key={idx}
+                              onClick={() => setSelectedDoc(doc.image)}
+                              className="group/doc relative overflow-hidden rounded-2xl border border-white/5 bg-[#0C0C0C]/50 p-2.5 cursor-zoom-in transition-all duration-300 hover:border-violet-500/30 hover:bg-[#141418] hover:shadow-[0_0_20px_rgba(139,92,246,0.1)]"
+                            >
+                              <div className="aspect-[4/3] w-full rounded-xl overflow-hidden bg-[#141418] border border-white/5">
+                                <img
+                                  src={doc.image}
+                                  alt={doc.title}
+                                  className="w-full h-full object-cover transition-transform duration-500 group-hover/doc:scale-105"
+                                />
+                                {/* Hover overlay */}
+                                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover/doc:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                  <div className="rounded-full bg-violet-500/20 border border-violet-500/30 p-2 text-violet-400 backdrop-blur-sm transform scale-90 group-hover/doc:scale-100 transition-all duration-300">
+                                    <Eye size={16} />
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="mt-2 text-center">
+                                <span className="text-[10px] font-semibold uppercase tracking-wider text-[#D7E2EA]/50 group-hover/doc:text-violet-400 transition-colors duration-300 block truncate px-1">
                                   {doc.label}
                                 </span>
                               </div>
