@@ -9,10 +9,11 @@ interface Message {
 }
 
 const AVINASH_KNOWLEDGE = {
-  about: `Avinash Patil is an Information Technology (IT) student at GTU and currently working as a Data Analytics Intern at QuadSync Tech Solutions. He is also a Computer Trainer at Tech-G Computer Academy.
+  about: `Avinash Patil is an Information Technology (IT) student at GTU and currently working as a Data Analyst at Indo Era (since July 2026). He is also a Computer Trainer at Tech-G Computer Academy.
 
 💻 Education: IT Student at Gujarat Technological University (GTU)
-🏢 Internship: Data Analytics Intern at QuadSync Tech Solutions
+🏢 Current Job: Data Analyst at Indo Era (Jul 2026 – Present)
+🎓 Previous Internship: Data Analytics Intern at QuadSync Tech Solutions (Mar 2026 – Jun 2026)
 🏫 Training: Teaching subjects like Excel, SQL, Power BI, and Python at Tech-G Computer Academy.`,
 
   contact: `You can reach Avinash via any of these channels:
@@ -263,7 +264,7 @@ export default function AIChatBot() {
                       <img src="/avinash-photo.webp?v=3" alt="Avinash Patil" className="h-full w-full object-cover" />
                     </div>
                     <h5 className="text-sm font-semibold text-white">Avinash Patil</h5>
-                    <p className="text-[10px] text-[#D7E2EA]/50 mt-0.5 uppercase tracking-wider">Data Analyst Intern</p>
+                    <p className="text-[10px] text-[#D7E2EA]/50 mt-0.5 uppercase tracking-wider">Data Analyst @ Indo Era</p>
                     <div className="flex items-center gap-1 mt-2.5 rounded-full bg-[#007AFF]/10 px-3 py-0.5 text-[9px] text-[#007AFF] font-medium tracking-wide">
                       <Sparkles size={10} /> AI Agent Active
                     </div>

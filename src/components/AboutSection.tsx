@@ -135,28 +135,87 @@ const AboutSection = () => {
                       ))}
                     </div>
 
+
+                    {/* Indo Era — Current Job */}
+                    <FadeIn delay={0.05} className="w-full max-w-[720px]">
+                      <div className="rounded-[28px] border border-emerald-500/25 bg-[#141418]/50 backdrop-blur-md p-6 sm:p-8 text-left transition-all duration-300 hover:border-emerald-500/40 hover:shadow-[0_0_40px_rgba(16,185,129,0.10)]">
+                        {/* Header Row: Logo + Info + Badge */}
+                        <div className="flex flex-col sm:flex-row sm:items-start gap-5 border-b border-white/5 pb-6 mb-6">
+                          {/* Company Logo Badge */}
+                          <div className="shrink-0 h-16 w-16 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-teal-600/20 border border-emerald-500/30 flex items-center justify-center shadow-[0_0_20px_rgba(16,185,129,0.15)]">
+                            <span className="text-2xl font-black text-emerald-400 tracking-tight select-none">IE</span>
+                          </div>
+                          {/* Company Info */}
+                          <div className="flex-1 min-w-0">
+                            <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-1">
+                              <h3 className="text-xl sm:text-2xl font-bold text-white">Indo Era</h3>
+                              <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 px-3 py-0.5 text-[10px] sm:text-xs font-semibold text-emerald-400 uppercase tracking-wider w-fit">
+                                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                                Currently Working
+                              </span>
+                            </div>
+                            <p className="text-base font-semibold text-[#D7E2EA]/85 mb-3">Data Analyst</p>
+                            {/* Detail Pills */}
+                            <div className="flex flex-wrap gap-2">
+                              <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] text-[#D7E2EA]/70 font-medium">
+                                📅 Jul 2026 – Present
+                              </span>
+                              <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] text-[#D7E2EA]/70 font-medium">
+                                📍 Surat, Gujarat
+                              </span>
+                              <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] text-[#D7E2EA]/70 font-medium">
+                                💼 Full-Time
+                              </span>
+                              <span className="inline-flex items-center gap-1.5 rounded-full border border-blue-500/20 bg-blue-500/10 px-3 py-1 text-[11px] text-blue-300 font-medium">
+                                📊 Data Analytics & BI
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        {/* Description */}
+                        <p className="text-sm sm:text-base text-[#D7E2EA]/75 leading-relaxed font-medium">
+                          Currently working as a Data Analyst at Indo Era, Surat. Responsible for analyzing business datasets, building interactive Power BI dashboards, automating reporting workflows, and delivering actionable insights to support strategic decision-making across departments.
+                        </p>
+                      </div>
+                    </FadeIn>
+
                     {/* QuadSync Internship & Certificates */}
                     <FadeIn delay={0.1} className="w-full max-w-[720px]">
                       <div className="rounded-[28px] border border-white/10 bg-[#141418]/30 backdrop-blur-md p-6 sm:p-8 text-left transition-all duration-300 hover:border-white/15">
-                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/5 pb-5 mb-6">
-                          <div>
-                            <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-widest text-teal-400">
-                              Internship Completed
-                            </span>
-                            <h3 className="text-xl sm:text-2xl font-bold text-white mt-1">
-                              QuadSync Tech Solutions
-                            </h3>
-                            <p className="text-sm text-[#D7E2EA]/60 font-medium">
-                              Data Analyst Intern
-                            </p>
+                        {/* Header Row: Logo + Info + Badge */}
+                        <div className="flex flex-col sm:flex-row sm:items-start gap-5 border-b border-white/5 pb-6 mb-6">
+                          {/* Company Logo Badge */}
+                          <div className="shrink-0 h-16 w-16 rounded-2xl bg-gradient-to-br from-teal-500/15 to-cyan-600/15 border border-teal-500/25 flex items-center justify-center shadow-[0_0_15px_rgba(20,184,166,0.10)]">
+                            <span className="text-xl font-black text-teal-400 tracking-tight select-none">QS</span>
                           </div>
-                          <div className="text-left sm:text-right shrink-0">
-                            <span className="inline-block rounded-full border border-white/10 bg-white/5 px-3.5 py-1 text-xs text-[#D7E2EA]/85 font-medium">
-                              April 20, 2026 – June 20, 2026
-                            </span>
+                          {/* Company Info */}
+                          <div className="flex-1 min-w-0">
+                            <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-1">
+                              <h3 className="text-xl sm:text-2xl font-bold text-white">QuadSync Tech Solutions</h3>
+                              <span className="inline-flex items-center gap-1.5 rounded-full bg-teal-500/10 border border-teal-500/25 px-3 py-0.5 text-[10px] sm:text-xs font-semibold text-teal-400 uppercase tracking-wider w-fit">
+                                ✓ Completed
+                              </span>
+                            </div>
+                            <p className="text-base font-semibold text-[#D7E2EA]/85 mb-3">Data Analytics Intern</p>
+                            {/* Detail Pills */}
+                            <div className="flex flex-wrap gap-2">
+                              <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] text-[#D7E2EA]/70 font-medium">
+                                📅 Apr 2026 – Jun 2026
+                              </span>
+                              <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] text-[#D7E2EA]/70 font-medium">
+                                📍 Surat, Gujarat
+                              </span>
+                              <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] text-[#D7E2EA]/70 font-medium">
+                                🎓 Internship
+                              </span>
+                              <span className="inline-flex items-center gap-1.5 rounded-full border border-purple-500/20 bg-purple-500/10 px-3 py-1 text-[11px] text-purple-300 font-medium">
+                                📊 SQL · Python · Power BI
+                              </span>
+                            </div>
                           </div>
                         </div>
-                        
+
+
                         <p className="text-sm sm:text-base text-[#D7E2EA]/75 leading-relaxed mb-6 font-medium">
                           During this 2-month training-based internship, I actively worked on analyzing business data, designing dashboard mockups, writing SQL queries, and preparing data-driven presentations. This experience deepened my understanding of industry workflows, structured data handling, and analytics storytelling.
                         </p>

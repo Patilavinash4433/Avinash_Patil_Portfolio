@@ -55,7 +55,7 @@ const INITIAL_RESUME_DATA: ResumeData = {
   email: 'patiluday8035@gmail.com',
   linkedin: 'linkedin.com/in/patilavinash4046',
   github: 'Github.com/Patilavinash4433',
-  summary: 'Detail-oriented and results-driven Data Analyst with hands-on experience in data analysis, dashboard development, reporting automation, and business intelligence. Proficient in Power BI, SQL, Python, Excel, and Tableau. Skilled in ETL processes, KPI reporting, DAX, data transformation, and statistical analysis. Proven ability to translate complex datasets into actionable business insights. Founder of a data-focused training academy with demonstrated leadership and instructional design experience. Actively seeking a data-focused role to contribute to data-driven decision-making at scale.',
+  summary: 'Results-driven Data Analyst currently working at Indo Era, with hands-on experience in data analysis, dashboard development, reporting automation, and business intelligence. Proficient in Power BI, SQL, Python, Excel, and Tableau. Skilled in ETL processes, KPI reporting, DAX, data transformation, and statistical analysis. Proven ability to translate complex datasets into actionable business insights. Founder of a data-focused training academy with demonstrated leadership and instructional design experience. Passionate about enabling data-driven decision-making at scale.',
   skills: {
     languages: 'Python, SQL, HTML, CSS, JS, Others',
     analytics: 'Power BI (DAX, Power Query), Tableau, Microsoft Excel (Advanced), SAP Analytics Cloud',
@@ -65,6 +65,20 @@ const INITIAL_RESUME_DATA: ResumeData = {
     competencies: 'Data Cleaning, Dashboard Development, KPI Reporting, ETL, EDA, Business Intelligence, Reporting Automation, Statistical Analysis, Stakeholder Reporting'
   },
   experience: [
+    {
+      role: 'Data Analyst',
+      company: 'Indo Era',
+      location: 'Surat, Gujarat',
+      duration: 'Jul 2026 – Present',
+      bullets: [
+        'Analyzing large business datasets using SQL, Python, and Excel to generate actionable insights and support strategic decision-making.',
+        'Developing and maintaining interactive Power BI dashboards and BI reports to track key business metrics and operational performance.',
+        'Performing data cleaning, preprocessing, and exploratory data analysis (EDA) to ensure data accuracy and reporting reliability.',
+        'Creating automated reporting workflows and KPI tracking systems to reduce manual effort and improve efficiency.',
+        'Collaborating with cross-functional teams to understand business requirements and deliver tailored analytics solutions.',
+        'Conducting trend analysis and performance reporting to identify growth opportunities and business bottlenecks.'
+      ]
+    },
     {
       role: 'Data Analytics Intern',
       company: 'QuadSync Tech Solutions',
@@ -725,17 +739,20 @@ export default function ResumePage() {
               }}
             >
               {/* NAVY HEADER BLOCK */}
-              <div className="bg-[#1B365D] text-white p-6 -mx-[16mm] -mt-[16mm] mb-5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+              <div 
+                className="bg-[#1B365D] text-white p-6 -mx-[16mm] -mt-[16mm] mb-5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4"
+                style={{ backgroundColor: '#1B365D', color: '#ffffff' }}
+              >
                 <div>
                   <h1 className="text-3xl font-black uppercase tracking-wider leading-none mb-1">
                     {resumeData.name}
                   </h1>
-                  <p className="text-[10px] font-bold text-[#60A5FA] uppercase tracking-widest leading-none">
+                  <p className="text-[10px] font-bold text-[#60A5FA] uppercase tracking-widest leading-none" style={{ color: '#60A5FA' }}>
                     {resumeData.role}
                   </p>
                 </div>
 
-                <div className="text-left sm:text-right text-[10px] text-gray-200 space-y-0.5 leading-tight font-medium">
+                <div className="text-left sm:text-right text-[10px] text-gray-200 space-y-0.5 leading-tight font-medium" style={{ color: '#e5e7eb' }}>
                   <div>{resumeData.location} | {resumeData.phone}</div>
                   <div>{resumeData.email}</div>
                   <div>{resumeData.linkedin}</div>
@@ -745,21 +762,21 @@ export default function ResumePage() {
 
               {/* PROFESSIONAL SUMMARY */}
               <div className="mb-5">
-                <h2 className="text-[11px] font-black uppercase tracking-wider text-[#1B365D] border-b border-[#1B365D] pb-1 mb-2">
+                <h2 className="text-[11px] font-black uppercase tracking-wider text-[#1B365D] border-b border-[#1B365D] pb-1 mb-2" style={{ color: '#1B365D', borderColor: '#1B365D' }}>
                   Professional Summary
                 </h2>
-                <p className="text-[9.5px] text-[#374151] leading-relaxed text-justify">
+                <p className="text-[9.5px] text-[#374151] leading-relaxed text-justify" style={{ color: '#374151' }}>
                   {resumeData.summary}
                 </p>
               </div>
 
               {/* TECHNICAL SKILLS TABLE */}
               <div className="mb-5">
-                <h2 className="text-[11px] font-black uppercase tracking-wider text-[#1B365D] border-b border-[#1B365D] pb-1 mb-2">
+                <h2 className="text-[11px] font-black uppercase tracking-wider text-[#1B365D] border-b border-[#1B365D] pb-1 mb-2" style={{ color: '#1B365D', borderColor: '#1B365D' }}>
                   Technical Skills
                 </h2>
                 
-                <table className="w-full text-[9px] border-collapse border border-[#E2E8F0]">
+                <table className="w-full text-[9px] border-collapse border border-[#E2E8F0]" style={{ borderColor: '#E2E8F0' }}>
                   <tbody>
                     {[
                       { label: 'Languages & Query', val: resumeData.skills.languages },
@@ -769,11 +786,11 @@ export default function ResumePage() {
                       { label: 'Tools & Platforms', val: resumeData.skills.tools },
                       { label: 'Core Competencies', val: resumeData.skills.competencies }
                     ].map((row, rIdx) => (
-                      <tr key={rIdx} className="border-b border-[#E2E8F0] last:border-b-0">
-                        <td className="w-[25%] bg-[#F8FAFC] font-bold text-[#1B365D] p-2 border-r border-[#E2E8F0] align-middle">
+                      <tr key={rIdx} className="border-b border-[#E2E8F0] last:border-b-0" style={{ borderColor: '#E2E8F0' }}>
+                        <td className="w-[25%] bg-[#F8FAFC] font-bold text-[#1B365D] p-2 border-r border-[#E2E8F0] align-middle" style={{ backgroundColor: '#F8FAFC', color: '#1B365D', borderColor: '#E2E8F0' }}>
                           {row.label}
                         </td>
-                        <td className="w-[75%] bg-white text-[#374151] p-2 align-middle leading-normal">
+                        <td className="w-[75%] bg-white text-[#374151] p-2 align-middle leading-normal" style={{ backgroundColor: '#ffffff', color: '#374151' }}>
                           {row.val}
                         </td>
                       </tr>
@@ -784,7 +801,7 @@ export default function ResumePage() {
 
               {/* PROFESSIONAL EXPERIENCE */}
               <div className="mb-5">
-                <h2 className="text-[11px] font-black uppercase tracking-wider text-[#1B365D] border-b border-[#1B365D] pb-1 mb-3">
+                <h2 className="text-[11px] font-black uppercase tracking-wider text-[#1B365D] border-b border-[#1B365D] pb-1 mb-3" style={{ color: '#1B365D', borderColor: '#1B365D' }}>
                   Professional Experience
                 </h2>
 
@@ -792,17 +809,17 @@ export default function ResumePage() {
                   {resumeData.experience.map((exp, idx) => (
                     <div key={idx} className="space-y-1 break-avoid">
                       <div className="flex justify-between items-baseline leading-none">
-                        <span className="text-[10px] font-bold text-[#1B365D]">{exp.role}</span>
-                        <span className="text-[9px] font-bold text-[#374151]">{exp.duration}</span>
+                        <span className="text-[10px] font-bold text-[#1B365D]" style={{ color: '#1B365D' }}>{exp.role}</span>
+                        <span className="text-[9px] font-bold text-[#374151]" style={{ color: '#374151' }}>{exp.duration}</span>
                       </div>
                       
-                      <div className="text-[9.5px] font-semibold text-[#6B7280] leading-none mb-1">
+                      <div className="text-[9.5px] font-semibold text-[#6B7280] leading-none mb-1" style={{ color: '#6B7280' }}>
                         {exp.company} | {exp.location}
                       </div>
 
                       <ul className="list-disc pl-4 text-[9px] text-[#374151] space-y-0.5 leading-relaxed">
                         {exp.bullets.map((bullet, bIdx) => (
-                          <li key={bIdx} className="bullet-point">{bullet}</li>
+                          <li key={bIdx} className="bullet-point" style={{ color: '#374151' }}>{bullet}</li>
                         ))}
                       </ul>
                     </div>
@@ -812,7 +829,7 @@ export default function ResumePage() {
 
               {/* PROJECTS (First 2) */}
               <div className="mb-0">
-                <h2 className="text-[11px] font-black uppercase tracking-wider text-[#1B365D] border-b border-[#1B365D] pb-1 mb-3">
+                <h2 className="text-[11px] font-black uppercase tracking-wider text-[#1B365D] border-b border-[#1B365D] pb-1 mb-3" style={{ color: '#1B365D', borderColor: '#1B365D' }}>
                   Projects
                 </h2>
 
@@ -820,17 +837,17 @@ export default function ResumePage() {
                   {resumeData.projects.slice(0, 2).map((proj, idx) => (
                     <div key={idx} className="space-y-1 break-avoid">
                       <div className="flex justify-between items-baseline leading-none">
-                        <span className="text-[10px] font-bold text-[#1B365D]">{proj.name}</span>
-                        <span className="text-[9px] font-bold text-[#374151]">{proj.date}</span>
+                        <span className="text-[10px] font-bold text-[#1B365D]" style={{ color: '#1B365D' }}>{proj.name}</span>
+                        <span className="text-[9px] font-bold text-[#374151]" style={{ color: '#374151' }}>{proj.date}</span>
                       </div>
                       
-                      <div className="text-[9.5px] font-semibold text-[#6B7280] leading-none mb-1">
+                      <div className="text-[9.5px] font-semibold text-[#6B7280] leading-none mb-1" style={{ color: '#6B7280' }}>
                         {proj.stack}
                       </div>
 
                       <ul className="list-disc pl-4 text-[9px] text-[#374151] space-y-0.5 leading-relaxed">
                         {proj.bullets.map((bullet, bIdx) => (
-                          <li key={bIdx} className="bullet-point">{bullet}</li>
+                          <li key={bIdx} className="bullet-point" style={{ color: '#374151' }}>{bullet}</li>
                         ))}
                       </ul>
                     </div>
@@ -862,17 +879,17 @@ export default function ResumePage() {
                   {resumeData.projects.slice(2).map((proj, idx) => (
                     <div key={idx} className="space-y-1 break-avoid">
                       <div className="flex justify-between items-baseline leading-none">
-                        <span className="text-[10px] font-bold text-[#1B365D]">{proj.name}</span>
-                        <span className="text-[9px] font-bold text-[#374151]">{proj.date}</span>
+                        <span className="text-[10px] font-bold text-[#1B365D]" style={{ color: '#1B365D' }}>{proj.name}</span>
+                        <span className="text-[9px] font-bold text-[#374151]" style={{ color: '#374151' }}>{proj.date}</span>
                       </div>
                       
-                      <div className="text-[9.5px] font-semibold text-[#6B7280] leading-none mb-1">
+                      <div className="text-[9.5px] font-semibold text-[#6B7280] leading-none mb-1" style={{ color: '#6B7280' }}>
                         {proj.stack}
                       </div>
 
                       <ul className="list-disc pl-4 text-[9px] text-[#374151] space-y-0.5 leading-relaxed">
                         {proj.bullets.map((bullet, bIdx) => (
-                          <li key={bIdx} className="bullet-point">{bullet}</li>
+                          <li key={bIdx} className="bullet-point" style={{ color: '#374151' }}>{bullet}</li>
                         ))}
                       </ul>
                     </div>
@@ -882,24 +899,24 @@ export default function ResumePage() {
 
               {/* EDUCATION */}
               <div className="mb-5">
-                <h2 className="text-[11px] font-black uppercase tracking-wider text-[#1B365D] border-b border-[#1B365D] pb-1 mb-2">
+                <h2 className="text-[11px] font-black uppercase tracking-wider text-[#1B365D] border-b border-[#1B365D] pb-1 mb-2" style={{ color: '#1B365D', borderColor: '#1B365D' }}>
                   Education
                 </h2>
 
                 {resumeData.education.map((edu, idx) => (
                   <div key={idx} className="space-y-1 break-avoid">
                     <div className="flex justify-between items-baseline leading-none">
-                      <span className="text-[10px] font-bold text-[#1B365D]">{edu.degree}</span>
-                      <span className="text-[9px] font-bold text-[#374151]">{edu.duration}</span>
+                      <span className="text-[10px] font-bold text-[#1B365D]" style={{ color: '#1B365D' }}>{edu.degree}</span>
+                      <span className="text-[9px] font-bold text-[#374151]" style={{ color: '#374151' }}>{edu.duration}</span>
                     </div>
                     
-                    <div className="text-[9.5px] font-semibold text-[#6B7280] leading-none mb-1.5">
+                    <div className="text-[9.5px] font-semibold text-[#6B7280] leading-none mb-1.5" style={{ color: '#6B7280' }}>
                       {edu.school}
                     </div>
 
                     <ul className="list-disc pl-4 text-[9px] text-[#374151] space-y-0.5">
                       {edu.bullets.map((bullet, bIdx) => (
-                        <li key={bIdx} className="bullet-point">{bullet}</li>
+                        <li key={bIdx} className="bullet-point" style={{ color: '#374151' }}>{bullet}</li>
                       ))}
                     </ul>
                   </div>
@@ -908,13 +925,13 @@ export default function ResumePage() {
 
               {/* CERTIFICATIONS (2 Column Layout) */}
               <div className="break-avoid">
-                <h2 className="text-[11px] font-black uppercase tracking-wider text-[#1B365D] border-b border-[#1B365D] pb-1 mb-2">
+                <h2 className="text-[11px] font-black uppercase tracking-wider text-[#1B365D] border-b border-[#1B365D] pb-1 mb-2" style={{ color: '#1B365D', borderColor: '#1B365D' }}>
                   Certifications
                 </h2>
 
                 <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-0.5 pl-4 list-disc text-[9px] text-[#374151] leading-relaxed">
                   {resumeData.certifications.map((cert, idx) => (
-                    <li key={idx} className="bullet-point">{cert}</li>
+                    <li key={idx} className="bullet-point" style={{ color: '#374151' }}>{cert}</li>
                   ))}
                 </ul>
               </div>
