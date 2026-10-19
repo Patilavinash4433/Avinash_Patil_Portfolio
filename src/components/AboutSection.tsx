@@ -271,13 +271,10 @@ const AboutSection = () => {
                     {/* QuadSync AI/ML Internship */}
                     <FadeIn delay={0.15} className="w-full max-w-[720px]">
                       <div className="rounded-[28px] border border-violet-500/20 bg-[#141418]/30 backdrop-blur-md p-6 sm:p-8 text-left transition-all duration-300 hover:border-violet-500/30 hover:shadow-[0_0_30px_rgba(139,92,246,0.08)]">
-                        {/* Header Row: Logo + Info + Badge */}
                         <div className="flex flex-col sm:flex-row sm:items-start gap-5 border-b border-white/5 pb-6 mb-6">
-                          {/* Company Logo */}
                           <div className="shrink-0 h-16 w-16 rounded-2xl bg-gradient-to-br from-violet-500/15 to-purple-600/15 border border-violet-500/25 flex items-center justify-center shadow-[0_0_15px_rgba(139,92,246,0.12)]">
                             <span className="text-xl font-black text-violet-400 tracking-tight select-none">QS</span>
                           </div>
-                          {/* Company Info */}
                           <div className="flex-1 min-w-0">
                             <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-1">
                               <h3 className="text-xl sm:text-2xl font-bold text-white">QuadSync Tech Solutions</h3>
@@ -286,44 +283,30 @@ const AboutSection = () => {
                               </span>
                             </div>
                             <p className="text-base font-semibold text-[#D7E2EA]/85 mb-3">AI / ML Intern</p>
-                            {/* Detail Pills */}
                             <div className="flex flex-wrap gap-2">
                               <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] text-[#D7E2EA]/70 font-medium">
-                                📅 2026
+                                📅 01 Jul 2026 – 05 Sep 2026
                               </span>
                               <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] text-[#D7E2EA]/70 font-medium">
-                                📍 Surat, Gujarat
+                                📍 Chh. Sambhajinagar, MH
                               </span>
                               <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] text-[#D7E2EA]/70 font-medium">
-                                🎓 Internship
+                                🎓 ID: QTS2607AI0001
                               </span>
                               <span className="inline-flex items-center gap-1.5 rounded-full border border-violet-500/20 bg-violet-500/10 px-3 py-1 text-[11px] text-violet-300 font-medium">
-                                🤖 AI · ML · Python
+                                🤖 AI · ML · Python · Data Analysis
                               </span>
                             </div>
                           </div>
                         </div>
                         <p className="text-sm sm:text-base text-[#D7E2EA]/75 leading-relaxed mb-6 font-medium">
-                          Completed an AI/ML internship at QuadSync Tech Solutions, gaining hands-on experience in machine learning concepts, model building, and data-driven AI solutions using Python and related libraries.
+                          Completed a 2-month internship in <strong className="text-white">Artificial Intelligence & Machine Learning</strong> at QuadSync Tech Solutions (01 Jul – 05 Sep 2026). Demonstrated strong analytical thinking, dedication, and a solid understanding of data analysis and visualization. Actively contributed to project work with a structured approach to data handling, problem-solving, and deriving meaningful insights.
                         </p>
-                        {/* Document Previews — AI/ML */}
                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                           {[
-                            {
-                              title: "AI/ML Appreciation Certificate",
-                              image: "/quadsync-aiml-appreciation.webp",
-                              label: "Appreciation Cert."
-                            },
-                            {
-                              title: "AI/ML Completion Certificate",
-                              image: "/quadsync-aiml-completion.webp",
-                              label: "Completion Cert."
-                            },
-                            {
-                              title: "Letter of Recommendation",
-                              image: "/quadsync-aiml-lor.webp",
-                              label: "Recommendation LOR"
-                            }
+                            { title: "AI/ML Appreciation Certificate", image: "/quadsync-aiml-appreciation.jpg", label: "Appreciation Cert." },
+                            { title: "AI/ML Completion Certificate",   image: "/quadsync-aiml-completion.jpg",   label: "Completion Cert."  },
+                            { title: "Letter of Recommendation",       image: "/quadsync-aiml-lor.jpg",          label: "Recommendation LOR" }
                           ].map((doc, idx) => (
                             <div
                               key={idx}
@@ -331,12 +314,7 @@ const AboutSection = () => {
                               className="group/doc relative overflow-hidden rounded-2xl border border-white/5 bg-[#0C0C0C]/50 p-2.5 cursor-zoom-in transition-all duration-300 hover:border-violet-500/30 hover:bg-[#141418] hover:shadow-[0_0_20px_rgba(139,92,246,0.1)]"
                             >
                               <div className="aspect-[4/3] w-full rounded-xl overflow-hidden bg-[#141418] border border-white/5">
-                                <img
-                                  src={doc.image}
-                                  alt={doc.title}
-                                  className="w-full h-full object-cover transition-transform duration-500 group-hover/doc:scale-105"
-                                />
-                                {/* Hover overlay */}
+                                <img src={doc.image} alt={doc.title} className="w-full h-full object-cover transition-transform duration-500 group-hover/doc:scale-105" />
                                 <div className="absolute inset-0 bg-black/50 opacity-0 group-hover/doc:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                                   <div className="rounded-full bg-violet-500/20 border border-violet-500/30 p-2 text-violet-400 backdrop-blur-sm transform scale-90 group-hover/doc:scale-100 transition-all duration-300">
                                     <Eye size={16} />
