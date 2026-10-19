@@ -209,7 +209,7 @@ const AboutSection = () => {
                                 🎓 Internship
                               </span>
                               <span className="inline-flex items-center gap-1.5 rounded-full border border-purple-500/20 bg-purple-500/10 px-3 py-1 text-[11px] text-purple-300 font-medium">
-                                📊 SQL · Python · Power BI
+                                📊 SQL · Python · Power BI · Excel
                               </span>
                             </div>
                           </div>
@@ -289,10 +289,10 @@ const AboutSection = () => {
                                 📅 01 Jul 2026 – 05 Sep 2026
                               </span>
                               <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] text-[#D7E2EA]/70 font-medium">
-                                📍 Chh. Sambhajinagar, MH
+                                📍 Surat, Gujarat
                               </span>
                               <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] text-[#D7E2EA]/70 font-medium">
-                                🎓 ID: QTS2607AI0001
+                                🎓 Internship
                               </span>
                               <span className="inline-flex items-center gap-1.5 rounded-full border border-violet-500/20 bg-violet-500/10 px-3 py-1 text-[11px] text-violet-300 font-medium">
                                 🤖 AI · ML · Python · Data Analysis
